@@ -14,13 +14,11 @@ module.exports = {
                 .addChoice('Queue', QueueRepeatMode.QUEUE)
                 .addChoice('Autoplay', QueueRepeatMode.AUTOPLAY)),
     async execute(interaction) {
-
-        await interaction.deferReply();
         const queue = interaction.client.player.getQueue(interaction.guildId);
-        if (!queue || !queue.playing) return await interaction.followUp({ content: '❌ | No music is being played!' });
+        if (!queue || !queue.playing) return await interaction.reply({ content: '❌ No music is being played!' });
         const loopMode = interaction.options.getInteger('mode');
         const success = queue.setRepeatMode(loopMode);
         const mode = loopMode === QueueRepeatMode.TRACK ? '🔂' : loopMode === QueueRepeatMode.QUEUE ? '🔁' : '▶';
-        return await interaction.followUp({ content: success ? `${mode} | Updated loop mode!` : '❌ | Could not update loop mode!' });
+        return await interaction.reply({ content: success ? `${mode} Updated loop mode!` : '❌ Could not update loop mode!' });
     },
 };

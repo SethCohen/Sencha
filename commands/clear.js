@@ -5,13 +5,9 @@ module.exports = {
         .setName('clear')
         .setDescription('Clears queue.'),
     async execute(interaction) {
-        await interaction.deferReply();
-
         const queue = interaction.client.player.getQueue(interaction.guildId);
-        if (!queue) return await interaction.followUp({ content: '❌ | No music in the queue!' });
-
+        if (!queue) return await interaction.reply({ content: '❌ No music in the queue!' });
         queue.clear();
-
-        return await interaction.followUp({ content: '❌ | Queue cleared.' });
+        return await interaction.reply({ content: '❌ Queue cleared.' });
     },
 };
