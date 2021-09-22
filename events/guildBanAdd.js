@@ -1,4 +1,4 @@
-const channelId = '622881573980733460'    // Channel to post to.
+const {channelId} = require('../config.json');
 
 module.exports = {
     name: 'guildBanAdd',
@@ -11,8 +11,6 @@ module.exports = {
                         channel.send(`**${fetchedBan.user} has been banned.**\n**Reason:**\n${fetchedBan.reason}`)
                     })
                     .catch(() => console.log("Can't fetch channel."))
-                /*fetchedBan.user.send(`**$You've been banned.**\n**Reason:** ${fetchedBan.reason}`)
-                    .catch(() => console.log("Can't DM user."))*/
 
             })
             .catch(() => console.log("Can't fetch ban."))
