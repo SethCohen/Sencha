@@ -28,6 +28,8 @@ module.exports = {
         if (!searchResult || !searchResult.tracks.length) return await interaction.followUp({ content: '❌ No results were found!' });
 
         const queue = await interaction.client.player.createQueue(guild, {
+            leaveOnEnd: false,
+            leaveOnEmpty: false,
             metadata: {
                 channel: interaction.channel
             }
