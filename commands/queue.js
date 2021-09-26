@@ -33,73 +33,80 @@ module.exports = {
         await interaction.deferReply();
 
         const queue = interaction.client.player.getQueue(interaction.guildId);
-        if (!queue || !queue.playing) return await interaction.followUp({content: 'No music is being played!'});
-        const currentTrack = queue.current;
-
-        const row = new MessageActionRow().addComponents(
-            new MessageButton()
-                .setCustomId('prev')
-                .setLabel('👈Prev')
-                .setStyle('SECONDARY'),
-            new MessageButton()
-                .setCustomId('next')
-                .setLabel('👉 Next')
-                .setStyle('SECONDARY')
-        );
-
-        let chunkSize = 10;
-        let embeds = []
-        let chunks = []
-        let index = 0
-        let pageNumber = 1
-        for (let i = 0, j = queue.tracks.length; i < j; i += chunkSize) {
-            let chunk = queue.tracks.map((track, trackIndex) => {
-                return `**${trackIndex + 1}. [${truncate(track.title)}](${track.url})** - ${track.duration}`;
-            }).slice(i, i + chunkSize);
-            chunks.push(chunk)
+        if (!queue || !queue.playing) {
+            return await interaction.followUp({content: 'No music is being played!'})
         }
-        for (const chunk of chunks) {
-            const embed = new MessageEmbed()
-                .setColor(0x003b70)
-                .setTitle(`Server Queue`)
-                .setDescription(`${chunk.join('\n')}`)
-                .setFooter(`Page ${pageNumber++}/${chunks.length} - Queue Length ${convertTime(queue.totalTime)}`)
-                .addField('Now Playing', `**[${currentTrack.title}](${currentTrack.url})**`)
-                .setThumbnail(`${currentTrack.thumbnail}`)
-            embeds.push(embed)
-        }
+        else if (queue.tracks.length === 0) {
+            return await interaction.followUp({content: 'There is no music in the queue!'})
+        } else {
+            const currentTrack = queue.current;
 
-        await interaction.editReply({embeds: [embeds[index]], components: [row]});
-        const message = await interaction.fetchReply()
-        const collector = message.createMessageComponentCollector({time: 60000});
-
-        collector.on('collect', async i => {
-            if (i.customId === 'next' && index < embeds.length - 1) {
-                ++index
-                await i.update({embeds: [embeds[index]]});
-            } else if (i.customId === 'prev' && index > 0) {
-                --index
-                await i.update({embeds: [embeds[index]]});
-            } else {
-                await i.reply({content: "No valid page to go to.", ephemeral: true})
-            }
-        });
-
-        collector.on('end', collected => {
             const row = new MessageActionRow().addComponents(
                 new MessageButton()
                     .setCustomId('prev')
                     .setLabel('👈Prev')
-                    .setStyle('SECONDARY')
-                    .setDisabled(true),
+                    .setStyle('SECONDARY'),
                 new MessageButton()
                     .setCustomId('next')
                     .setLabel('👉 Next')
                     .setStyle('SECONDARY')
-                    .setDisabled(true)
             );
-            interaction.editReply({components: [row]})
-            // console.log(`Collected ${collected.size} interactions.`);
-        });
+
+            let chunkSize = 10;
+            let embeds = []
+            let chunks = []
+            let index = 0
+            let pageNumber = 1
+            for (let i = 0, j = queue.tracks.length; i < j; i += chunkSize) {
+                let chunk = queue.tracks.map((track, trackIndex) => {
+                    return `**${trackIndex + 1}. [${truncate(track.title)}](${track.url})** - ${track.duration}`;
+                }).slice(i, i + chunkSize);
+                chunks.push(chunk)
+            }
+
+            for (const chunk of chunks) {
+                const embed = new MessageEmbed()
+                    .setColor(0x003b70)
+                    .setTitle(`Server Queue`)
+                    .setDescription(`${chunk.join('\n')}`)
+                    .setFooter(`Page ${pageNumber++}/1 - Queue Length ${convertTime(queue.totalTime)}`)
+                    .addField('Now Playing', `**[${currentTrack.title}](${currentTrack.url})**`)
+                    .setThumbnail(`${currentTrack.thumbnail}`)
+                embeds.push(embed)
+            }
+
+            await interaction.editReply({embeds: [embeds[index]], components: [row]});
+            const message = await interaction.fetchReply()
+            const collector = message.createMessageComponentCollector({time: 60000});
+
+            collector.on('collect', async i => {
+                if (i.customId === 'next' && index < embeds.length - 1) {
+                    ++index
+                    await i.update({embeds: [embeds[index]]});
+                } else if (i.customId === 'prev' && index > 0) {
+                    --index
+                    await i.update({embeds: [embeds[index]]});
+                } else {
+                    await i.reply({content: "No valid page to go to.", ephemeral: true})
+                }
+            });
+
+            collector.on('end', collected => {
+                const row = new MessageActionRow().addComponents(
+                    new MessageButton()
+                        .setCustomId('prev')
+                        .setLabel('👈Prev')
+                        .setStyle('SECONDARY')
+                        .setDisabled(true),
+                    new MessageButton()
+                        .setCustomId('next')
+                        .setLabel('👉 Next')
+                        .setStyle('SECONDARY')
+                        .setDisabled(true)
+                );
+                interaction.editReply({components: [row]})
+                // console.log(`Collected ${collected.size} interactions.`);
+            });
+        }
     },
 };

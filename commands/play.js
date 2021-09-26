@@ -29,7 +29,6 @@ module.exports = {
 
         const queue = await interaction.client.player.createQueue(guild, {
             leaveOnEnd: false,
-            leaveOnEmpty: false,
             metadata: {
                 channel: interaction.channel
             }
