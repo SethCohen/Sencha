@@ -1,2 +1,2 @@
-# Jasmine
+# Sencha
 OTeaU Discord Bot
