@@ -47,8 +47,9 @@ module.exports = {
 						interaction.guild.members.ban(user, { days: 0, reason: reason })
 							.then(kickInfo => {
 								if (shame === 'yes') {
-									return interaction.reply({ content: `Banned ${kickInfo.user?.tag ?? kickInfo.tag ?? kickInfo}` });
+									return interaction.reply({ content: `**${kickInfo.user?.tag ?? kickInfo.tag ?? kickInfo}** has been banned. \n**Reason:** ${reason}` });
 								}
+								return interaction.reply({ content: `**${kickInfo.user?.tag ?? kickInfo.tag ?? kickInfo}** has been banned. \n**Reason:** ${reason}`, ephemeral: true });
 							})
 							.catch(() => console.log('Can\'t ban user.')),
 					)
@@ -57,8 +58,9 @@ module.exports = {
 						interaction.guild.members.ban(user, { days: 0, reason: reason })
 							.then(kickInfo => {
 								if (shame === 'yes') {
-									return interaction.reply({ content: `Banned ${kickInfo.user?.tag ?? kickInfo.tag ?? kickInfo}` });
+									return interaction.reply({ content: `**${kickInfo.user?.tag ?? kickInfo.tag ?? kickInfo}** has been banned. \n**Reason:** ${reason}` });
 								}
+								return interaction.reply({ content: `**${kickInfo.user?.tag ?? kickInfo.tag ?? kickInfo}** has been banned. \n**Reason:** ${reason}`, ephemeral: true });
 							})
 							.catch(() => console.log('Can\'t ban user.'));
 					});
