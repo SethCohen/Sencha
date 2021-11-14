@@ -1,4 +1,4 @@
-const {guildId, banCommandId, adminRoleId} = require('../config.json');
+const {guildId, banCommandId, adminRoleId} = require('../../config.json');
 
 module.exports = {
     name: 'ready',

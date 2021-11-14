@@ -1,4 +1,4 @@
-const {channelId} = require('../config.json');
+const {channelId} = require('../../config.json');
 
 module.exports = {
     name: 'guildBanAdd',

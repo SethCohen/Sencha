@@ -1,21 +1,21 @@
 {
   "name": "sencha",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "start": "node index.js",
-    "deploy_commands": "node deploy-commands.js"
+    "start": "node src/index.js",
+    "deploy": "node src/helpers/deployCommands.js"
   },
   "dependencies": {
-    "@discordjs/builders": "^0.6.0",
-    "@discordjs/opus": "^0.5.3",
+    "@discordjs/builders": "^0.8.2",
+    "@discordjs/opus": "^0.7.0",
     "@discordjs/rest": "^0.1.0-canary.0",
-    "@discordjs/voice": "^0.6.0",
-    "better-sqlite3": "^7.4.3",
-    "discord-api-types": "^0.23.1",
+    "@discordjs/voice": "^0.7.5",
+    "better-sqlite3": "^7.4.4",
+    "discord-api-types": "^0.24.0",
     "discord-player": "^5.1.0",
-    "discord.js": "^13.1.0",
-    "eslint": "^7.32.0",
+    "discord.js": "^13.3.1",
+    "eslint": "^8.2.0",
     "ffmpeg-static": "^4.4.0"
   }
 }
