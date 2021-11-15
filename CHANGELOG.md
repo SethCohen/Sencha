@@ -6,11 +6,16 @@
 - Emote role assigning
 - Socials feed (Send posts from specific Instagram or Twitter accounts to a specific channel)
 
+## v1.2.5 - 2021-11-15
+
+### Fixed
+- Fixed `/brick` error. Bot would crash on /brick due to being unable to find gif directory.
+
 ## v1.2.4 - 2021-11-14
 
 ### Added
 - Added `shame` option to `/ban`, if user selects Yes, sends message to channel saying why they got banned. [[f9871a0]](https://github.com/SethCohen/Sencha/commit/f9871a085f3f745a4b4ab4eab044efef5b6159c5)
-- Added more rules to `/rule`
+- Added more rules to `/rule` [[02cf198]](https://github.com/SethCohen/Sencha/commit/02cf198789933ef960839559376f80b9b3a13df7)
 
 ### Changed
 - Changed bans to not auto-post to first accessible channel. [[e514934]](https://github.com/SethCohen/Sencha/commit/e5149340eac75f4e4917622cb53e28234053d43a)

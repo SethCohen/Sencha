@@ -12,9 +12,10 @@ module.exports = {
 		),
 	async execute(interaction) {
 		const user = interaction.options.getUser('user');
-		const brickFiles = fs.readdirSync('./assets').filter(file => file.startsWith('brick'));
+		const path = './src/assets/';
+		const brickFiles = fs.readdirSync(path).filter(file => file.startsWith('brick'));
 
-		const file = 'assets\\\\' + brickFiles[Math.floor(Math.random() * brickFiles.length)];
+		const file = path + brickFiles[Math.floor(Math.random() * brickFiles.length)];
 
 		return await interaction.reply({ content: `${user} has been bricked.`, files: [file] });
 	},
