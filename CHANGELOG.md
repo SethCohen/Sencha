@@ -9,7 +9,8 @@
 ## v1.2.5 - 2021-11-15
 
 ### Fixed
-- Fixed `/brick` error. Bot would crash on /brick due to being unable to find gif directory.
+- Fixed `/brick` error. Bot would crash on /brick due to being unable to find gif directory. [[d8300a2]](https://github.com/SethCohen/Sencha/commit/d8300a2df664d8c3f6ab3aa0761ab3ad0d6893f6)
+- Fixed music player bug where player would suddenly stop or skip over songs due to old codecs.
 
 ## v1.2.4 - 2021-11-14
 

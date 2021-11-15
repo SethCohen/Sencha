@@ -29,6 +29,12 @@ module.exports = {
 
 		const queue = await interaction.client.player.createQueue(guild, {
 			leaveOnEnd: false,
+			ytdlOptions: {
+				quality: 'highest',
+				filter: 'audioonly',
+				highWaterMark: 1 << 25,
+				dlChunkSize: 0,
+			},
 			metadata: {
 				channel: interaction.channel,
 			},
