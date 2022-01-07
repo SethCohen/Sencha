@@ -1,4 +1,4 @@
-const { guildId, banCommandId, adminRoleId } = require('../../config.json');
+const { guildId, adminRoleId } = require('../../config.json');
 
 module.exports = {
 	name: 'ready',
@@ -8,7 +8,8 @@ module.exports = {
 		client.user.setActivity('I love you.');
 
 		const guild = client.guilds.cache.get(guildId);
-		const command = await guild.commands.fetch(banCommandId);
+		const commands = await guild.commands.fetch();
+		const banCommand = await commands.find(command => command.name === 'ban');
 
 		const permissions = [
 			{
@@ -18,6 +19,6 @@ module.exports = {
 			},
 		];
 
-		await command.permissions.add({ permissions });
+		await banCommand.permissions.add({ permissions });
 	},
 };
