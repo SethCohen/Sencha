@@ -10,7 +10,7 @@
 ### Fixed
 - Fixed `ban` command perm error being not found. [[64e253b]](https://github.com/SethCohen/Sencha/commit/64e253bffbea9a9b3a15a3ca8cc28f302d3adc88)
 ### Added
-- Added deleted/edited message logging to a specified logging channel as specified in a config.json
+- Added deleted/edited message logging to a specified logging channel as specified in a config.json [[d5131d2]](https://github.com/SethCohen/Sencha/commit/d5131d29fe384906d4fe99bcda32d39c0247040c)
 
 ## v1.2.5 - 2021-11-15
 
