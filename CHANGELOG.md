@@ -6,11 +6,17 @@
 - Emote role assigning
 - Socials feed (Send posts from specific Instagram or Twitter accounts to a specific channel)
 
+## v1.3.0 - 2022-01-07
+### Fixed
+- Fixed `ban` command perm error being not found. [[64e253b]](https://github.com/SethCohen/Sencha/commit/64e253bffbea9a9b3a15a3ca8cc28f302d3adc88)
+### Added
+- Added deleted/edited message logging to a specified logging channel as specified in a config.json
+
 ## v1.2.5 - 2021-11-15
 
 ### Fixed
 - Fixed `/brick` error. Bot would crash on /brick due to being unable to find gif directory. [[d8300a2]](https://github.com/SethCohen/Sencha/commit/d8300a2df664d8c3f6ab3aa0761ab3ad0d6893f6)
-- Fixed music player bug where player would suddenly stop or skip over songs due to old codecs.
+- Fixed music player bug where player would suddenly stop or skip over songs due to old codecs. [[ddd1ee2]](https://github.com/SethCohen/Sencha/commit/ddd1ee28c94e677787bc81b69eb21c570685f3e3)
 
 ## v1.2.4 - 2021-11-14
 
