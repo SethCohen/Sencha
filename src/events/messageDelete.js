@@ -4,17 +4,28 @@ const { MessageEmbed } = require('discord.js');
 module.exports = {
 	name: 'messageDelete',
 	execute(message) {
-		const embed = new MessageEmbed()
-			.setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL() })
-			.setDescription(message.content)
-			.setTimestamp(message.createdTimestamp)
-			.setFooter({ text: 'The bot creator doesnt like logging :(\nMessage Deleted.' });
+		if (message.partial) {
+			return false;
+		}
 
-		message.guild.channels.fetch(logChannelId)
-			.then(channel => {
-				channel.send({ embeds: [embed] });
-			})
-			.catch(console.error);
+		try {
+			const embed = new MessageEmbed()
+				.setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL() })
+				.setColor('#ff9595')
+				.setTitle(`Message Deleted in #${message.channel.name}`)
+				.setDescription(message.content)
+				.setTimestamp(message.createdTimestamp)
+				.setFooter({ text: 'The bot creator doesnt like logging :(' });
+
+			message.guild.channels.fetch(logChannelId)
+				.then(channel => {
+					channel.send({ embeds: [embed] });
+				})
+				.catch(console.error);
+		}
+		catch (e) {
+			console.error(e);
+		}
 
 	},
 };
