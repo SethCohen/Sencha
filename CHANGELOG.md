@@ -6,6 +6,12 @@
 - Emote role assigning
 - Socials feed (Send posts from specific Instagram or Twitter accounts to a specific channel)
 
+## v1.3.1 - 2022-01-08
+### Fixed
+- `messageUpdate` `messageDelete` Fixed crash error on partials. [[083ad11]](https://github.com/SethCohen/Sencha/commit/083ad11c3eae2c789627e1b3fbd228fa02fff7b9)
+### Added 
+- `messageUpdate` `messageDelete` Added channel name to logger. [[083ad11]](https://github.com/SethCohen/Sencha/commit/083ad11c3eae2c789627e1b3fbd228fa02fff7b9)
+
 ## v1.3.0 - 2022-01-07
 ### Fixed
 - Fixed `ban` command perm error being not found. [[64e253b]](https://github.com/SethCohen/Sencha/commit/64e253bffbea9a9b3a15a3ca8cc28f302d3adc88)
