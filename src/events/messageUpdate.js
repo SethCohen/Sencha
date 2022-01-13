@@ -12,14 +12,14 @@ module.exports = {
 				const embed = new MessageEmbed()
 					.setAuthor({ name: newMessage.author.tag, iconURL: newMessage.author.displayAvatarURL() })
 					.setColor('#baffc2')
-					.setTitle(`Message Updated in #${newMessage.channel.name}`)
+					.setDescription(`Message Edited in ${newMessage.channel} from ${newMessage.author}.\n[Jump To Message](${newMessage.url})`)
 					.setFields([
 						{
-							name: 'Old Message:',
+							name: 'Old:',
 							value: oldMessage.content,
 						},
 						{
-							name: 'New Message:',
+							name: 'New:',
 							value: newMessage.content,
 						},
 					])

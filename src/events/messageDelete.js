@@ -12,14 +12,13 @@ module.exports = {
 			const embed = new MessageEmbed()
 				.setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL() })
 				.setColor('#ff9595')
-				.setTitle(`Message Deleted in #${message.channel.name}`)
-				.setDescription(message.content)
+				.setDescription(`Message Deleted in ${message.channel} from ${message.author}.\n${message.content}`)
 				.setTimestamp(message.createdTimestamp)
 				.setFooter({ text: 'The bot creator doesnt like logging :(' });
 
 			message.guild.channels.fetch(logChannelId)
 				.then(channel => {
-					channel.send({ embeds: [embed] });
+					channel.send({ embeds: [embed], files: [...message.attachments.values()] });
 				})
 				.catch(console.error);
 		}
