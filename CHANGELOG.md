@@ -6,6 +6,10 @@
 - Emote role assigning
 - Socials feed (Send posts from specific Instagram or Twitter accounts to a specific channel)
 
+## v1.3.3 - 2022-01-13
+### Fixed
+- `messageUpdate` Fixed messageUpdate throwing an error on non-text-type Messages [[dd06e77]](https://github.com/SethCohen/Sencha/commit/dd06e77663a68688636a857336d6873797df1e8e)
+
 ## v1.3.2 - 2022-01-12
 ### Added
 - `messageUpdate` Added Jump To link to edited message. [[0a9ff20]](https://github.com/SethCohen/Sencha/commit/0a9ff20c148684cf0fbdbd349d2c261c423f45ed)
