@@ -3,7 +3,7 @@ const { MessageEmbed } = require('discord.js');
 module.exports = {
 	name: 'messageUpdate',
 	execute(oldMessage, newMessage) {
-		if (oldMessage.partial) {
+		if (oldMessage.partial || !['DEFAULT', 'REPLY'].includes(oldMessage.type)) {
 			return false;
 		}
 
