@@ -6,6 +6,11 @@
 - Emote role assigning
 - Socials feed (Send posts from specific Instagram or Twitter accounts to a specific channel)
 
+## v1.3.2 - 2022-01-12
+### Added
+- `messageUpdate` Added Jump To link to edited message. [[0a9ff20]](https://github.com/SethCohen/Sencha/commit/0a9ff20c148684cf0fbdbd349d2c261c423f45ed)
+- `messageDelete` Added image logging.[[0a9ff20]](https://github.com/SethCohen/Sencha/commit/0a9ff20c148684cf0fbdbd349d2c261c423f45ed)
+
 ## v1.3.1 - 2022-01-08
 ### Fixed
 - `messageUpdate` `messageDelete` Fixed crash error on partials. [[083ad11]](https://github.com/SethCohen/Sencha/commit/083ad11c3eae2c789627e1b3fbd228fa02fff7b9)
