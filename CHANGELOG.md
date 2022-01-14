@@ -6,6 +6,10 @@
 - Emote role assigning
 - Socials feed (Send posts from specific Instagram or Twitter accounts to a specific channel)
 
+## v1.3.4 - 2022-01-14
+### Fixed
+- `messageUpdate` Fixed error thrown on field value max length limit break. Now truncates messages longer than 1024 characters. [[f2dd994]](https://github.com/SethCohen/Sencha/commit/f2dd994be3c58fbca7b2889218e57e6a837577de)
+
 ## v1.3.3 - 2022-01-13
 ### Fixed
 - `messageUpdate` Fixed messageUpdate throwing an error on non-text-type Messages [[dd06e77]](https://github.com/SethCohen/Sencha/commit/dd06e77663a68688636a857336d6873797df1e8e)
