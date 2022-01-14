@@ -16,11 +16,11 @@ module.exports = {
 					.setFields([
 						{
 							name: 'Old:',
-							value: oldMessage.content,
+							value: oldMessage.content.length > 1024 ? oldMessage.content.slice(0, 1021) + '...' : oldMessage.content,
 						},
 						{
 							name: 'New:',
-							value: newMessage.content,
+							value: newMessage.content.length > 1024 ? newMessage.content.slice(0, 1021) + '...' : newMessage.content,
 						},
 					])
 					.setTimestamp(newMessage.createdTimestamp)
