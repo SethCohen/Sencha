@@ -37,11 +37,17 @@ module.exports = {
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('reroll')
-				.setDescription('Rerolls a giveaway for new winners. Defaults to latest giveaway if no messageId specified')
+				.setDescription('Rerolls a giveaway for new winners. Must specify location for bot to know which giveaway to reroll.')
+				.addStringOption(option =>
+					option
+						.setName('channel_id')
+						.setDescription('The channel id the giveaway is in.')
+						.setRequired(true))
 				.addStringOption(option =>
 					option
 						.setName('message_id')
-						.setDescription('The giveaway message id.')))
+						.setDescription('The giveaway message id.')
+						.setRequired(true)))
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('delete')
@@ -119,7 +125,31 @@ module.exports = {
 						.catch(console.error);
 				})
 				.catch(console.error);
+		}
+		else if (interaction.options.getSubcommand() === 'reroll') {
+			const channelId = interaction.options.getString('channel_id');
+			const messageId = interaction.options.getString('message_id');
 
+			interaction.guild.channels.fetch(channelId)
+				.then(channel => {
+					channel.messages.fetch(messageId)
+						.then(async message => {
+							const reactionUsers = await message.reactions.resolve('🎁').users.fetch();
+							const winners = reactionUsers.filter(user => user !== interaction.client.user).random(1);
+							const successMessage = `Congratulations to all winners and thank you to all those who entered!\n**New Winner(s):** ${winners}`;
+							const failMessage = 'No one joined the giveaway thus there are no winners!';
+
+							const embed = new MessageEmbed()
+								.setTitle('Giveaway Rerolled!')
+								.setColor('#9eeeff')
+								.setDescription(winners.length ? successMessage : failMessage);
+
+							await interaction.editReply({ embeds: [embed] });
+
+						})
+						.catch(console.error);
+				})
+				.catch(console.error);
 		}
 
 	},
