@@ -2,6 +2,8 @@
 
 ## Upcoming
 
+- Add giveaway reroll message id footer
+- Add giveaway author check on reroll, end, and delete.
 - Emote role assigning
 - Socials feed (Send posts from specific Instagram or Twitter accounts to a specific channel)
 
