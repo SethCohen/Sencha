@@ -2,9 +2,15 @@
 
 ## Upcoming
 
-- Giveaway functionality (`/creategiveaway <prize> <time limit> <way to claim>`)
 - Emote role assigning
 - Socials feed (Send posts from specific Instagram or Twitter accounts to a specific channel)
+
+## v1.4.0 - 2022-01-15
+### Added
+- `/giveaway create` Added creating giveaways with persistence in case bot crashes and restarts. [[c954141]](https://github.com/SethCohen/Sencha/commit/c9541413e3dfefa3af20c89f58f469034589eefb)
+- `/giveaway end` Added immediately ending active giveaways. [[1f82e02]](https://github.com/SethCohen/Sencha/commit/1f82e02cb5bccd278c48f20348438bba95fb4fb9)
+- `/giveaway reroll` Added ability to reroll a giveaway. [[711687e]](https://github.com/SethCohen/Sencha/commit/711687e069c494b96593f62a2341d4089ea85c21)
+- `/giveaway delete` Added ability to end a giveaway without pulling winners. [[f2c825f]](https://github.com/SethCohen/Sencha/commit/f2c825f688bb219f6a445bce06b4d5c2066214b1)
 
 ## v1.3.4 - 2022-01-14
 ### Fixed
