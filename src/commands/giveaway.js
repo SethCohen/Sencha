@@ -151,6 +151,32 @@ module.exports = {
 				})
 				.catch(console.error);
 		}
+		else if (interaction.options.getSubcommand() === 'delete') {
+			const messageId = interaction.options.getString('message_id');
+			const giveaway = getGiveaway(messageId);
+
+			interaction.guild.channels.fetch(giveaway.channelId)
+				.then(channel => {
+					channel.messages.fetch(giveaway.messageId)
+						.then(async message => {
+							const embed = new MessageEmbed()
+								.setTitle('Giveaway Cancelled And Deleted.')
+								.setColor('#9eeeff')
+								.setDescription('Aww....')
+								.setFooter({ text: `Giveaway message id: ${message.id}` });
+
+							cancelTimeout(giveaway.messageId);
+							deleteGiveaway(message.id);
+
+							return await interaction.editReply({ embeds: [embed] });
+
+						})
+						.catch(console.error);
+				})
+				.catch(console.error);
+
+
+		}
 
 	},
 };
