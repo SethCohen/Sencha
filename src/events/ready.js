@@ -1,7 +1,6 @@
 const { guildId, adminRoleId } = require('../../config.json');
-const { createDatabase, getGiveaways, deleteGiveaway } = require('../helpers/dbModel');
-const { setTimeout } = require('timers/promises');
-const { MessageEmbed } = require('discord.js');
+const { createDatabase, getGiveaways } = require('../helpers/dbModel');
+const { createTimeout } = require('../helpers/giveawayTimeouts');
 
 module.exports = {
 	name: 'ready',
@@ -35,24 +34,7 @@ module.exports = {
 				.then(channel => {
 					channel.messages.fetch(giveaway.messageId)
 						.then(message => {
-							setTimeout(giveaway.endDate - Date.now())
-								.then(() => {
-									const winners = message.reactions.resolve('🎁').users.cache.filter(user => user !== client.user).random(giveaway.amountWinners);
-									const successMessage = `Congratulations to all winners and thank you to all those who entered!\n**Winner(s):** ${winners}`;
-									const failMessage = 'No one joined the giveaway thus there are no winners!';
-
-									const embed = new MessageEmbed()
-										.setTitle(`Giveaway Ended!\nPrize: ${giveaway.prize}`)
-										.setColor('#9eeeff')
-										.setDescription(winners.length ? successMessage : failMessage)
-										.setFooter({ text: `Giveaway message id: ${message.id}\nEnded on` })
-										.setTimestamp(new Date(giveaway.endDate));
-
-									message.reply({ embeds: [embed] });
-
-									deleteGiveaway(message.id);
-								})
-								.catch(console.error);
+							createTimeout(message, giveaway.amountWinners, giveaway.prize, giveaway.endDate);
 						})
 						.catch(console.error);
 				})

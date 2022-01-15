@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed } = require('discord.js');
-const { setTimeout } = require('timers/promises');
-const { addGiveaway, deleteGiveaway } = require('../helpers/dbModel');
+const { addGiveaway, deleteGiveaway, getGiveaway } = require('../helpers/dbModel');
+const { createTimeout, cancelTimeout } = require('../helpers/giveawayTimeouts');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -29,15 +29,26 @@ module.exports = {
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('end')
-				.setDescription('Ends a giveaway immediately. Defaults to latest giveaway if no messageId specified'))
+				.setDescription('Ends a giveaway immediately. Defaults to latest giveaway if no message id is specified')
+				.addStringOption(option =>
+					option
+						.setName('message_id')
+						.setDescription('The giveaway message id.')))
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('reroll')
-				.setDescription('Rerolls a giveaway for new winners. Defaults to latest giveaway if no messageId specified'))
+				.setDescription('Rerolls a giveaway for new winners. Defaults to latest giveaway if no messageId specified')
+				.addStringOption(option =>
+					option
+						.setName('message_id')
+						.setDescription('The giveaway message id.')))
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('delete')
-				.setDescription('Deletes a giveaway. Defaults to latest giveaway if no messageId specified')),
+				.setDescription('Deletes a giveaway. Defaults to latest giveaway if no messageId specified')
+				.addStringOption(option =>
+					option.setName('message_id')
+						.setDescription('The giveaway message id.'))),
 	async execute(interaction) {
 		await interaction.deferReply();
 
@@ -74,23 +85,38 @@ module.exports = {
 			await interaction.editReply({ embeds: [embed] });
 			await message.react('🎁');
 
-			addGiveaway(message.id, message.channelId, prize, amountWinners, dateEnd.getTime());
+			addGiveaway(message.id, message.channelId, prize, amountWinners, Date.now(), dateEnd.getTime());
 
-			setTimeout(dateEnd - Date.now())
-				.then(() => {
+			createTimeout(message, amountWinners, prize, dateEnd.getTime());
 
-					const winners = message.reactions.resolve('🎁').users.cache.filter(user => user !== interaction.client.user).random(amountWinners);
-					const successMessage = `Congratulations to all winners and thank you to all those who entered!\n**Winner(s):** ${winners}`;
-					const failMessage = 'No one joined the giveaway thus there are no winners!';
+		}
+		else if (interaction.options.getSubcommand() === 'end') {
+			const messageId = interaction.options.getString('message_id');
+			const giveaway = getGiveaway(messageId);
 
-					embed.setTitle(`Giveaway Ended!\nPrize: ${prize}`)
-						.setDescription(winners.length ? successMessage : failMessage)
-						.setFooter({ text: `Giveaway message id: ${message.id}\nEnded on` })
-						.setTimestamp(dateEnd);
+			interaction.guild.channels.fetch(giveaway.channelId)
+				.then(channel => {
+					channel.messages.fetch(giveaway.messageId)
+						.then(async message => {
+							const reactionUsers = await message.reactions.resolve('🎁').users.fetch();
+							const winners = reactionUsers.filter(user => user !== interaction.client.user).random(giveaway.amountWinners);
+							const successMessage = `Congratulations to all winners and thank you to all those who entered!\n**Winner(s):** ${winners}`;
+							const failMessage = 'No one joined the giveaway thus there are no winners!';
 
-					interaction.followUp({ embeds: [embed] });
+							const embed = new MessageEmbed()
+								.setTitle(`Giveaway Ended!\nPrize: ${giveaway.prize}`)
+								.setColor('#9eeeff')
+								.setDescription(winners.length ? successMessage : failMessage)
+								.setFooter({ text: `Giveaway message id: ${message.id}\nEnded on` })
+								.setTimestamp(Number(giveaway.endDate));
 
-					deleteGiveaway(message.id);
+							await interaction.editReply({ embeds: [embed] });
+
+							cancelTimeout(giveaway.messageId);
+							deleteGiveaway(message.id);
+
+						})
+						.catch(console.error);
 				})
 				.catch(console.error);
 
