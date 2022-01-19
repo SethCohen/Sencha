@@ -104,6 +104,11 @@ module.exports = {
 				.then(channel => {
 					channel.messages.fetch(giveaway.messageId)
 						.then(async message => {
+
+							if (interaction.user !== message.interaction.user) {
+								return await interaction.editReply({ content: 'You can\'t end this giveaway. You are not the giveaway author.' });
+							}
+
 							const reactionUsers = await message.reactions.resolve('🎁').users.fetch();
 							const winners = reactionUsers.filter(user => user !== interaction.client.user).random(giveaway.amountWinners);
 							const successMessage = `Congratulations to all winners and thank you to all those who entered!\n**Winner(s):** ${winners}`;
@@ -134,6 +139,10 @@ module.exports = {
 				.then(channel => {
 					channel.messages.fetch(messageId)
 						.then(async message => {
+							if (interaction.user !== message.interaction.user) {
+								return await interaction.editReply({ content: 'You can\'t reroll this giveaway. You are not the giveaway author.' });
+							}
+
 							const reactionUsers = await message.reactions.resolve('🎁').users.fetch();
 							const winners = reactionUsers.filter(user => user !== interaction.client.user).random(1);
 							const successMessage = `Congratulations to all winners and thank you to all those who entered!\n**New Winner(s):** ${winners}`;
@@ -159,6 +168,10 @@ module.exports = {
 				.then(channel => {
 					channel.messages.fetch(giveaway.messageId)
 						.then(async message => {
+							if (interaction.user !== message.interaction.user) {
+								return await interaction.editReply({ content: 'You can\'t delete this giveaway. You are not the giveaway author.' });
+							}
+
 							const embed = new MessageEmbed()
 								.setTitle('Giveaway Cancelled And Deleted.')
 								.setColor('#9eeeff')
