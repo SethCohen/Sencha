@@ -3,10 +3,13 @@
 ## Upcoming
 
 - Add giveaway reroll message id footer
-- Add giveaway author check on reroll, end, and delete.
 - Emote role assigning
 - Socials feed (Send posts from specific Instagram or Twitter accounts to a specific channel)
 
+## v1.4.1 - 2022-01-19
+### Added
+- `/giveaway reroll | end | delete` Added checks for if the command user is the giveaway author. [[e97aaff]](https://github.com/SethCohen/Sencha/commit/e97aaff9b084419e6181e878dddb3b88efac228a)
+- `/giveaway reroll` Added giveaway message id to footer. [[20b0934]](https://github.com/SethCohen/Sencha/commit/20b0934c8c4db27d5dd4ed6ecf5c0f7326bb363d)
 ## v1.4.0 - 2022-01-15
 ### Added
 - `/giveaway create` Added creating giveaways with persistence in case bot crashes and restarts. [[c954141]](https://github.com/SethCohen/Sencha/commit/c9541413e3dfefa3af20c89f58f469034589eefb)
