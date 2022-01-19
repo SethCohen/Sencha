@@ -151,7 +151,8 @@ module.exports = {
 							const embed = new MessageEmbed()
 								.setTitle('Giveaway Rerolled!')
 								.setColor('#9eeeff')
-								.setDescription(winners.length ? successMessage : failMessage);
+								.setDescription(winners.length ? successMessage : failMessage)
+								.setFooter({ text: `Giveaway message id: ${message.id}` });
 
 							await interaction.editReply({ embeds: [embed] });
 
