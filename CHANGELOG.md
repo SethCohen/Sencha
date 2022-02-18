@@ -2,9 +2,12 @@
 
 ## Upcoming
 
-- Add giveaway reroll message id footer
 - Emote role assigning
 - Socials feed (Send posts from specific Instagram or Twitter accounts to a specific channel)
+
+## v1.5.0 - 2022-02-17
+### Added
+- `/seek` `/jump` `/pause` `/resume` Music player commands. [[06b0adc]](https://github.com/SethCohen/Sencha/commit/06b0adc128ec6ca02a933426548f664dec06f721)
 
 ## v1.4.1 - 2022-01-19
 ### Added
