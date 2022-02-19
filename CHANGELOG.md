@@ -5,6 +5,10 @@
 - Emote role assigning
 - Socials feed (Send posts from specific Instagram or Twitter accounts to a specific channel)
 
+## v1.6.0 - 2022-02-17
+### Added
+- Added auto posting wholesome memes every 24 hours to #memes channel. [[8ef0618]](https://github.com/SethCohen/Sencha/commit/8ef0618bf6d62bde094ef1f651a6397a1b126a65)
+
 ## v1.5.0 - 2022-02-17
 ### Added
 - `/seek` `/jump` `/pause` `/resume` Music player commands. [[06b0adc]](https://github.com/SethCohen/Sencha/commit/06b0adc128ec6ca02a933426548f664dec06f721)
