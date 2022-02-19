@@ -1,6 +1,7 @@
-const { guildId, adminRoleId } = require('../../config.json');
+const { guildId, adminRoleId, memeChannelId } = require('../../config.json');
 const { createDatabase, getGiveaways } = require('../helpers/dbModel');
 const { createTimeout } = require('../helpers/giveawayTimeouts');
+const fs = require('fs');
 
 module.exports = {
 	name: 'ready',
@@ -40,6 +41,17 @@ module.exports = {
 				})
 				.catch(console.error);
 		}
+
+		// Autopost wholesome memes to meme channel
+		const files = fs.readdirSync('./src/assets/wholesome-memes/');
+		setInterval(() => {
+			const chosenFile = files[Math.floor(Math.random() * files.length)];
+			guild.channels.fetch(memeChannelId)
+				.then(channel => {
+					channel.send({ content: 'Here have a wholesome meme. 🙂', files: [`./src/assets/wholesome-memes/${chosenFile}`] });
+				})
+				.catch(console.error);
+		}, 86400000);
 
 
 	},

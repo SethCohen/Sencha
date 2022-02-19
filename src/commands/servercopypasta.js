@@ -3,7 +3,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('servercopypasta')
-		.setDescription('Reminds people what our servers virtues are about.')
+		.setDescription('Posts tea club\'s virtues. Copypasta starts with " our good..."')
 		.addUserOption(option =>
 			option.setName('user')
 				.setDescription('The user to mention.'))

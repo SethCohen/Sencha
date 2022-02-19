@@ -3,3 +3,4 @@
 config.json
 *.json
 /src/database.sqlite
+/src/assets/wholesome-memes/
