@@ -1,5 +1,38 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { Permissions } = require('discord.js');
+const { Permissions, MessageEmbed } = require('discord.js');
+const { modChannelId } = require('../../config.json');
+
+const banUser = (interaction, user, reason, shame) => {
+	interaction.guild.members.ban(user, { days: 0, reason: reason })
+		.then(memberBanned => {
+			if (shame === 'yes') {
+				return interaction.reply({ content: `**${memberBanned.user?.tag ?? memberBanned.tag ?? memberBanned}** has been banned. \n**Reason:** ${reason}` });
+			}
+			return interaction.reply({ content: `**${memberBanned.user?.tag ?? memberBanned.tag ?? memberBanned}** has been banned. \n**Reason:** ${reason}`, ephemeral: true });
+		})
+		.catch(console.error);
+
+};
+
+const logToModChannel = (interaction, user, reason) => {
+	try {
+		const embed = new MessageEmbed()
+			.setAuthor({ name: user.tag, iconURL:user.displayAvatarURL() })
+			.setColor('#ff9595')
+			.setDescription(`User has been banned.\nReason: ${reason}\nBan Author: ${interaction.member}`)
+			.setTimestamp(interaction.createdTimestamp)
+			.setFooter({ text: 'The bot creator doesnt like logging :(' });
+
+		interaction.guild.channels.fetch(modChannelId)
+			.then(channel => {
+				channel.send({ embeds: [embed] });
+			})
+			.catch(console.error);
+	}
+	catch (e) {
+		console.error(e);
+	}
+};
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -13,26 +46,26 @@ module.exports = {
 		)
 		.addStringOption(option =>
 			option.setName('reason')
-				.setDescription('The reason for banning the user.'))
+				.setDescription('The ban reason. This gets sent to the user anonymously.')
+				.setRequired(true))
 		.addStringOption(option =>
 			option.setName('shame')
-				.setDescription('Shame the user in chat?')
+				.setDescription('Shames the user in chat. Posts to wherever command is called.')
 				.addChoices([
 					['Yes', 'yes'],
 					['No', 'no'],
 				])),
 	async execute(interaction) {
-		const user = interaction.options.getUser('user');
-		let reason = interaction.options.getString('reason');
-		reason = reason ? reason : 'n/a';
-		const shame = interaction.options.getString('shame');
-
 		if (!interaction.member.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) {
 			return interaction.reply({
 				content: 'You do not have enough permissions to use this command.',
 				ephemeral: true,
 			});
 		}
+
+		const user = interaction.options.getUser('user');
+		const reason = interaction.options.getString('reason');
+		const shame = interaction.options.getString('shame');
 
 		interaction.guild.members.fetch(user).then(member => {
 			if (member.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) {
@@ -43,26 +76,14 @@ module.exports = {
 			}
 			else {
 				user.send(`**You've been banned from ${interaction.guild.name}.**\n**Reason:** ${reason}`)
-					.then(
-						interaction.guild.members.ban(user, { days: 0, reason: reason })
-							.then(kickInfo => {
-								if (shame === 'yes') {
-									return interaction.reply({ content: `**${kickInfo.user?.tag ?? kickInfo.tag ?? kickInfo}** has been banned. \n**Reason:** ${reason}` });
-								}
-								return interaction.reply({ content: `**${kickInfo.user?.tag ?? kickInfo.tag ?? kickInfo}** has been banned. \n**Reason:** ${reason}`, ephemeral: true });
-							})
-							.catch(() => console.log('Can\'t ban user.')),
-					)
+					.then(() => {
+						banUser(interaction, user, reason, shame);
+						logToModChannel(interaction, user, reason);
+					})
 					.catch(() => {
-						console.log('Can\'t DM user.');
-						interaction.guild.members.ban(user, { days: 0, reason: reason })
-							.then(kickInfo => {
-								if (shame === 'yes') {
-									return interaction.reply({ content: `**${kickInfo.user?.tag ?? kickInfo.tag ?? kickInfo}** has been banned. \n**Reason:** ${reason}` });
-								}
-								return interaction.reply({ content: `**${kickInfo.user?.tag ?? kickInfo.tag ?? kickInfo}** has been banned. \n**Reason:** ${reason}`, ephemeral: true });
-							})
-							.catch(() => console.log('Can\'t ban user.'));
+						console.error(`Can't DM ${user}.`);
+						banUser(interaction, user, reason, shame);
+						logToModChannel(interaction, user, reason);
 					});
 			}
 		});
