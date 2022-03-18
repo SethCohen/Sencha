@@ -10,7 +10,7 @@ const kickUser = (interaction, user, reason, shame) => {
 			}
 			return interaction.reply({ content: `**${memberKicked.user?.tag ?? memberKicked.tag ?? memberKicked}** has been kicked. \n**Reason:** ${reason}`, ephemeral: true });
 		})
-		.catch(() => console.log('Can\'t kick user.'));
+		.catch(console.error);
 
 };
 
@@ -19,7 +19,7 @@ const logToModChannel = (interaction, user, reason) => {
 		const embed = new MessageEmbed()
 			.setAuthor({ name: user.tag, iconURL:user.displayAvatarURL() })
 			.setColor('#ffe695')
-			.setDescription(`User has been kicked.\nReason: ${reason}\nKick Author: ${interaction.member}`)
+			.setDescription(`User has been kicked.\n**Reason:** ${reason}\n**Kick Author:** ${interaction.member}`)
 			.setTimestamp(interaction.createdTimestamp)
 			.setFooter({ text: 'The bot creator doesnt like logging :(' });
 

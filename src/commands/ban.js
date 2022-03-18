@@ -19,7 +19,7 @@ const logToModChannel = (interaction, user, reason) => {
 		const embed = new MessageEmbed()
 			.setAuthor({ name: user.tag, iconURL:user.displayAvatarURL() })
 			.setColor('#ff9595')
-			.setDescription(`User has been banned.\nReason: ${reason}\nBan Author: ${interaction.member}`)
+			.setDescription(`User has been banned.\n**Reason:** ${reason}\n**Ban Author:** ${interaction.member}`)
 			.setTimestamp(interaction.createdTimestamp)
 			.setFooter({ text: 'The bot creator doesnt like logging :(' });
 
