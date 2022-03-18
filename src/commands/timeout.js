@@ -7,9 +7,9 @@ const timeoutUser = (interaction, member, duration, reason, shame) => {
 	member.timeout(duration, reason)
 		.then(memberMuted => {
 			if (shame === 'yes') {
-				return interaction.reply({ content: `**${memberMuted.user?.tag ?? memberMuted.tag ?? memberMuted}** has been muted.\nDuration: ${ms(duration, { long: true })}\n**Reason:** ${reason}` });
+				return interaction.reply({ content: `**${memberMuted.user?.tag ?? memberMuted.tag ?? memberMuted}** has been muted.\n**Duration:** ${ms(duration, { long: true })}\n**Reason:** ${reason}` });
 			}
-			return interaction.reply({ content: `**${memberMuted.user?.tag ?? memberMuted.tag ?? memberMuted}** has been muted.\nDuration: ${ms(duration, { long: true })}\n**Reason:** ${reason}`, ephemeral: true });
+			return interaction.reply({ content: `**${memberMuted.user?.tag ?? memberMuted.tag ?? memberMuted}** has been muted.\n**Duration:** ${ms(duration, { long: true })}\n**Reason:** ${reason}`, ephemeral: true });
 		})
 		.catch(console.error);
 
@@ -20,7 +20,7 @@ const logToModChannel = (interaction, user, duration, reason) => {
 		const embed = new MessageEmbed()
 			.setAuthor({ name: user.tag, iconURL:user.displayAvatarURL() })
 			.setColor('#bc95ff')
-			.setDescription(`User has been muted.\nDuration: ${ms(duration, { long: true })}\nReason: ${reason}\nMute Author: ${interaction.member}`)
+			.setDescription(`User has been muted.\n**Duration:** ${ms(duration, { long: true })}\n**Reason:** ${reason}\n**Mute Author:** ${interaction.member}`)
 			.setTimestamp(interaction.createdTimestamp)
 			.setFooter({ text: 'The bot creator doesnt like logging :(' });
 
@@ -47,7 +47,7 @@ module.exports = {
 		)
 		.addStringOption(option =>
 			option.setName('duration')
-				.setDescription('The timeout length. e.g. 30m or 1d1h1m or 1d.')
+				.setDescription('The timeout length. e.g. 30m or 1d:1h:1m:1s.')
 				.setRequired(true),
 		)
 		.addStringOption(option =>
@@ -70,7 +70,8 @@ module.exports = {
 		}
 
 		const user = interaction.options.getUser('user');
-		const duration = ms(interaction.options.getString('duration'));
+		const strDuration = interaction.options.getString('duration');
+		const duration = strDuration.split(':').reduce((partialSum, currentVal) => partialSum + ms(currentVal), 0);
 		const reason = interaction.options.getString('reason');
 		const shame = interaction.options.getString('shame');
 
