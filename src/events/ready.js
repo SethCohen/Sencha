@@ -14,6 +14,8 @@ module.exports = {
 		const guild = client.guilds.cache.get(guildId);
 		const commands = await guild.commands.fetch();
 		const banCommand = await commands.find(command => command.name === 'ban');
+		const kickCommand = await commands.find(command => command.name === 'kick');
+		const timeoutCommand = await commands.find(command => command.name === 'timeout');
 		const permissions = [
 			{
 				id: adminRoleId,
@@ -22,6 +24,8 @@ module.exports = {
 			},
 		];
 		await banCommand.permissions.add({ permissions });
+		await kickCommand.permissions.add({ permissions });
+		await timeoutCommand.permissions.add({ permissions });
 
 		// Check for active giveaways
 		createDatabase();
