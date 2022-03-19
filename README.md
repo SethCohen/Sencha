@@ -6,6 +6,12 @@ This bot isn't meant to be used for any other Discord servers - although possibl
 
 ---
 
+## Features
+- Music playing
+- Fun inside joke commands
+- Utility & Moderation 
+- Automatically posts wholesome memes to #memes :)
+
 ## Music Commands:
 - `/clear` Clears queue.
 - `/disconnect` Disconnects bot from channel.
