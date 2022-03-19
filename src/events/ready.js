@@ -21,7 +21,7 @@ const startActiveGiveaways = (guild) => {
 	}
 };
 
-const setAdminCommandPerms = async (guild) => {
+const setModCommandPerms = async (guild) => {
 	const commands = await guild.commands.fetch();
 	const permissions = [
 		{
@@ -30,7 +30,7 @@ const setAdminCommandPerms = async (guild) => {
 			permission: true,
 		},
 	];
-	const modCommands = ['ban', 'kick', 'timeout', 'kick'];
+	const modCommands = ['ban', 'kick', 'timeout', 'warn'];
 	for (const commandName of modCommands) {
 		const foundCommand = await commands.find(command => command.name === commandName);
 		await foundCommand.permissions.add({ permissions });
@@ -64,7 +64,7 @@ module.exports = {
 
 		createDatabase();
 
-		await setAdminCommandPerms(guild);
+		await setModCommandPerms(guild);
 
 		startActiveGiveaways(guild);
 

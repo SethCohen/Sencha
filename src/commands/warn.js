@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { Permissions, MessageEmbed } = require('discord.js');
-const { modChannelId } = require('../../config.json');
+const { MessageEmbed } = require('discord.js');
+const { modChannelId, modRoleId } = require('../../config.json');
 const { updatePunishmentLogs } = require('../helpers/dbModel');
 
 const warnUser = (interaction, user, reason, shame) => {
@@ -53,7 +53,7 @@ module.exports = {
 					['No', 'no'],
 				])),
 	async execute(interaction) {
-		if (!interaction.member.permissions.has(Permissions.FLAGS.MODERATE_MEMBERS)) {
+		if (!interaction.member.roles.cache.has(modRoleId)) {
 			return interaction.reply({
 				content: 'You do not have enough permissions to use this command.',
 				ephemeral: true,
@@ -65,7 +65,7 @@ module.exports = {
 		const shame = interaction.options.getString('shame');
 
 		interaction.guild.members.fetch(user).then(member => {
-			if (member.permissions.has(Permissions.FLAGS.MODERATE_MEMBERS)) {
+			if (member.roles.cache.has(modRoleId)) {
 				return interaction.reply({
 					content: 'You cannot warn this person.',
 					ephemeral: true,
