@@ -15,7 +15,7 @@ function createDatabase() {
 }
 
 function deleteGiveaway(messageId) {
-	const db = new Database('./src/database.sqlite', { verbose: console.log });
+	const db = new Database('./src/database.sqlite');
 	const statement = db.prepare(`
 			DELETE FROM giveaways 
 			WHERE messageId = @messageId
@@ -25,7 +25,7 @@ function deleteGiveaway(messageId) {
 }
 
 function addGiveaway(messageId, channelId, prize, amountWinners, startDate, endDate) {
-	const db = new Database('./src/database.sqlite', { verbose: console.log });
+	const db = new Database('./src/database.sqlite');
 	const statement = db.prepare(`
 			INSERT INTO giveaways (messageId, channelId, prize, amountWinners, startDate, endDate) VALUES (@messageId, @channelId, @prize, @amountWinners, @startDate, @endDate)
 		`);
@@ -41,7 +41,7 @@ function addGiveaway(messageId, channelId, prize, amountWinners, startDate, endD
 }
 
 function getGiveaways() {
-	const db = new Database('./src/database.sqlite', { verbose: console.log });
+	const db = new Database('./src/database.sqlite');
 	const statement = db.prepare('SELECT * FROM giveaways');
 	const result = statement.all();
 	db.close();
@@ -49,7 +49,7 @@ function getGiveaways() {
 }
 
 function getGiveaway(messageId) {
-	const db = new Database('./src/database.sqlite', { verbose: console.log });
+	const db = new Database('./src/database.sqlite');
 	if (messageId) {
 		// Gets specified giveaway
 
@@ -69,7 +69,7 @@ function getGiveaway(messageId) {
 }
 
 function updatePunishmentLogs(user, column) {
-	const db = new Database('./src/database.sqlite', { verbose: console.log });
+	const db = new Database('./src/database.sqlite');
 	const insertStatement = db.prepare(`
 			INSERT OR IGNORE INTO punishmentLogs (user, timesBanned, timesKicked, timesTimeout, timesWarned) 
 			VALUES (@user, 0, 0, 0, 0)
@@ -97,7 +97,7 @@ function updatePunishmentLogs(user, column) {
 }
 
 function getUserPunishmentLogs(user) {
-	const db = new Database('./src/database.sqlite', { verbose: console.log });
+	const db = new Database('./src/database.sqlite');
 
 	const statement = db.prepare('SELECT * FROM punishmentLogs WHERE user = @user');
 	const result = statement.get({ user: user });
