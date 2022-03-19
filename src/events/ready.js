@@ -1,4 +1,4 @@
-const { guildId, adminRoleId, memeChannelId } = require('../../config.json');
+const { guildId, modRoleId, memeChannelId } = require('../../config.json');
 const { createDatabase, getGiveaways } = require('../helpers/dbModel');
 const { createTimeout } = require('../helpers/giveawayTimeouts');
 const fs = require('fs');
@@ -8,7 +8,6 @@ const startActiveGiveaways = (guild) => {
 	const giveaways = getGiveaways();
 	console.log('Giveaways Found:', giveaways);
 
-	// Set timers for giveaways
 	for (const giveaway of giveaways) {
 		guild.channels.fetch(giveaway.channelId)
 			.then(channel => {
@@ -26,13 +25,13 @@ const setAdminCommandPerms = async (guild) => {
 	const commands = await guild.commands.fetch();
 	const permissions = [
 		{
-			id: adminRoleId,
+			id: modRoleId,
 			type: 'ROLE',
 			permission: true,
 		},
 	];
-	const adminCommands = ['ban', 'kick', 'timeout', 'kick'];
-	for (const commandName of adminCommands) {
+	const modCommands = ['ban', 'kick', 'timeout', 'kick'];
+	for (const commandName of modCommands) {
 		const foundCommand = await commands.find(command => command.name === commandName);
 		await foundCommand.permissions.add({ permissions });
 	}
@@ -41,6 +40,7 @@ const setAdminCommandPerms = async (guild) => {
 const autopostWholesomeMemes = (guild) => {
 	const files = fs.readdirSync('./src/assets/wholesome-memes/');
 
+	// Schedules daily autoposting for 12:00pm EST
 	cron.schedule('0 12 * * *', () => {
 		const chosenFile = files[Math.floor(Math.random() * files.length)];
 		guild.channels.fetch(memeChannelId)
