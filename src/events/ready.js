@@ -41,7 +41,7 @@ const setAdminCommandPerms = async (guild) => {
 const autopostWholesomeMemes = (guild) => {
 	const files = fs.readdirSync('./src/assets/wholesome-memes/');
 
-	cron.schedule('0 15 * * *', () => {
+	cron.schedule('0 12 * * *', () => {
 		const chosenFile = files[Math.floor(Math.random() * files.length)];
 		guild.channels.fetch(memeChannelId)
 			.then(channel => {
