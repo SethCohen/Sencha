@@ -5,6 +5,18 @@
 - Emote role assigning
 - Socials feed (Send posts from specific Instagram or Twitter accounts to a specific channel)
 
+## v1.7.0 - 2022-03-19
+### Added
+- Added `/kick` [[4eade79]](https://github.com/SethCohen/Sencha/commit/4eade79ecffcff99cd00244aea90b7a1239f4209)
+- Added `/timeout` [[0c9fdad]](https://github.com/SethCohen/Sencha/commit/0c9fdadb6e63d7bf93006d8320cab2940a065ad3)
+- Added `/warn` [[0e8d792]](https://github.com/SethCohen/Sencha/commit/0e8d792352abf7496ffbdd99648c3bafa6c238a0)
+- Added `/userinfo` [[d6f7552]](https://github.com/SethCohen/Sencha/commit/d6f7552a1885c7efc6aa711c11e6fbfc0eb2c4c5)
+- Added punishment logging to `#moderator` channel as well as to a database. [[6cfcba9]](https://github.com/SethCohen/Sencha/commit/6cfcba9ab3d3f47f7171099e39bb22f41fa17d95) [[cd11390]](https://github.com/SethCohen/Sencha/commit/cd11390ba767a45365fd607488e38bf07017d1ab) [[d231616]](https://github.com/SethCohen/Sencha/commit/d2316164b5bdc53cf8a66d15b771d175e9fd5067)
+
+### Changed
+- Changed `/ban` and other related moderator commands to use Role Checking rather than Permission Checking.[[8cbe8cd]](https://github.com/SethCohen/Sencha/commit/8cbe8cdb221b68136cc087d5400a6d0adb8bf253)
+- Changed wholesomeme autoposting schedule to every 12:00pm EST. [[e9b3589]](https://github.com/SethCohen/Sencha/commit/e9b358909b3dd975e6daa091fce3119e91410f36)
+
 ## v1.6.0 - 2022-02-17
 ### Added
 - Added auto posting wholesome memes every 24 hours to #memes channel. [[8ef0618]](https://github.com/SethCohen/Sencha/commit/8ef0618bf6d62bde094ef1f651a6397a1b126a65)
