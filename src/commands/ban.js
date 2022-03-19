@@ -1,8 +1,10 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { Permissions, MessageEmbed } = require('discord.js');
 const { modChannelId } = require('../../config.json');
+const { updatePunishmentLogs } = require('../helpers/dbModel');
 
 const banUser = (interaction, user, reason, shame) => {
+	updatePunishmentLogs(user.id, 'timesBanned');
 	interaction.guild.members.ban(user, { days: 0, reason: reason })
 		.then(memberBanned => {
 			if (shame === 'yes') {

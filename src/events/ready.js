@@ -16,6 +16,7 @@ module.exports = {
 		const banCommand = await commands.find(command => command.name === 'ban');
 		const kickCommand = await commands.find(command => command.name === 'kick');
 		const timeoutCommand = await commands.find(command => command.name === 'timeout');
+		const warnCommand = await commands.find(command => command.name === 'warn');
 		const permissions = [
 			{
 				id: adminRoleId,
@@ -26,6 +27,7 @@ module.exports = {
 		await banCommand.permissions.add({ permissions });
 		await kickCommand.permissions.add({ permissions });
 		await timeoutCommand.permissions.add({ permissions });
+		await warnCommand.permissions.add({ permissions });
 
 		// Check for active giveaways
 		createDatabase();

@@ -1,8 +1,10 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { Permissions, MessageEmbed } = require('discord.js');
 const { modChannelId } = require('../../config.json');
+const { updatePunishmentLogs } = require('../helpers/dbModel');
 
 const kickUser = (interaction, user, reason, shame) => {
+	updatePunishmentLogs(user.id, 'timesKicked');
 	interaction.guild.members.kick(user, reason)
 		.then(memberKicked => {
 			if (shame === 'yes') {

@@ -2,8 +2,10 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const { Permissions, MessageEmbed } = require('discord.js');
 const { modChannelId } = require('../../config.json');
 const ms = require('ms');
+const { updatePunishmentLogs } = require('../helpers/dbModel');
 
 const timeoutUser = (interaction, member, duration, reason, shame) => {
+	updatePunishmentLogs(member.id, 'timesTimeout');
 	member.timeout(duration, reason)
 		.then(memberMuted => {
 			if (shame === 'yes') {
