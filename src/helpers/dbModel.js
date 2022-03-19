@@ -1,8 +1,16 @@
 const Database = require('better-sqlite3');
 
 function createDatabase() {
-	const db = new Database('./src/database.sqlite', { verbose: console.log });
-	db.prepare('CREATE TABLE IF NOT EXISTS giveaways(messageId TEXT PRIMARY KEY, channelId TEXT, prize TEXT, amountWinners TEXT, startDate TEXT, endDate TEXT)').run();
+	const db = new Database('./src/database.sqlite');
+
+	const createStatements = [
+		'CREATE TABLE IF NOT EXISTS giveaways(messageId TEXT PRIMARY KEY, channelId TEXT, prize TEXT, amountWinners TEXT, startDate TEXT, endDate TEXT)',
+		'CREATE TABLE IF NOT EXISTS punishmentLogs(user TEXT UNIQUE, timesBanned INTEGER, timesKicked INTEGER, timesTimeout INTEGER, timesWarned INTEGER)',
+	].map(sql => db.prepare(sql));
+
+	for (const createStatement of createStatements) {
+		createStatement.run();
+	}
 	db.close();
 }
 
@@ -60,6 +68,42 @@ function getGiveaway(messageId) {
 	}
 }
 
+function updatePunishmentLogs(user, column) {
+	const db = new Database('./src/database.sqlite', { verbose: console.log });
+	const insertStatement = db.prepare(`
+			INSERT OR IGNORE INTO punishmentLogs (user, timesBanned, timesKicked, timesTimeout, timesWarned) 
+			VALUES (@user, 0, 0, 0, 0)
+		`);
+	insertStatement.run({
+		user: user,
+	});
+	let updateStatement;
+	switch (column) {
+	case 'timesBanned':
+		updateStatement = db.prepare('UPDATE punishmentLogs SET timesBanned = timesBanned + 1 WHERE user = @user');
+		break;
+	case 'timesKicked':
+		updateStatement = db.prepare('UPDATE punishmentLogs SET timesKicked = timesKicked + 1 WHERE user = @user');
+		break;
+	case 'timesTimeout':
+		updateStatement = db.prepare('UPDATE punishmentLogs SET timesTimeout = timesTimeout + 1 WHERE user = @user');
+		break;
+	case 'timesWarned':
+		updateStatement = db.prepare('UPDATE punishmentLogs SET timesWarned = timesWarned + 1 WHERE user = @user');
+		break;
+	}
+	updateStatement.run({ user: user });
+	db.close();
+}
+
+function getUserPunishmentLogs(user) {
+	const db = new Database('./src/database.sqlite', { verbose: console.log });
+
+	const statement = db.prepare('SELECT * FROM punishmentLogs WHERE user = @user');
+	const result = statement.get({ user: user });
+	db.close();
+	return result;
+}
 
 module.exports = {
 	createDatabase,
@@ -67,4 +111,6 @@ module.exports = {
 	addGiveaway,
 	getGiveaways,
 	getGiveaway,
+	updatePunishmentLogs,
+	getUserPunishmentLogs,
 };
