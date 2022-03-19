@@ -6,6 +6,41 @@ This bot isn't meant to be used for any other Discord servers - although possibl
 
 ---
 
+## Music Commands:
+- `/clear` Clears queue.
+- `/disconnect` Disconnects bot from channel.
+- `/jump <track #>` Jumps to song in queue.
+- `/loop <mode>` Available modes: `Off` `Track` `Queue` `Autoplay`
+- `/np` Shows currently playing song.
+- `/pause` Pauses current song.
+- `/resume` Resumes current song.
+- `/play <url>` Adds song to bottom of queue.
+- `/playnext <url>` Adds song to top of queue.
+- `/seek <time>` Goes to specified time in seconds.
+- `/shuffle` Shuffles queue.
+- `/skip` Skips currently playing song.
+
+## Fun Commands:
+- `/servercopypasta <user> <prefix>`
+  - Posts ` our good christian atheist muslim jewish buddhist hindu taoist shinto sikh various aboriginal religions wicca pagan orange juice pastafarianism tea club server!`
+  - `user` mentions the specified user.
+  - `prefix` prefaces the copypasta.
+  - e.g. `/servercopypasta No swearing in`
+    - Sends `No swearing in our good christian atheist muslim jewish buddhist hindu taoist shinto sikh various aboriginal religions wicca pagan orange juice pastafarianism tea club server!` to chat.
+
+- `/brick <user>`
+  - Posts a gif of someone throwing a brick at a specified user.
+
+## Utility Commands:
+- `/rules <optional:rule number>`
+  - Posts the rules to chat.
+  - e.g. `/rules 5`
+- `/giveaway create <time> <prize> <winners>`
+- `/giveaway end <giveaway message id>`
+- `/giveaway reroll <giveaway channel id> <giveaway message id>`
+- `/giveaway delete <giveaway message id>`
+
+
 ## Moderation Commands:
 Things to note:
 - All moderation commands are automatically logged to `#moderator` with who got punished, the action author, the reason, etc.
