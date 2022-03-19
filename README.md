@@ -66,7 +66,7 @@ Commands:
   - e.g. `/timeout @Seth 1d:2h:30m:5s Timeout test 3.` (Timeouts user for 1 day, 2 hours, 30 minutes, and 5 seconds)
 
 - `/warn <user> <reason> <optional:shame>`
-  - e.g. `warn user: @Seth reason: Warning Test`
+  - e.g. `/warn user: @Seth reason: Warning Test`
 
 - `/userinfo <user>`
   - Prints how many the user has been punished.
