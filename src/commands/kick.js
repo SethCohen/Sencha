@@ -53,10 +53,10 @@ module.exports = {
 		.addStringOption(option =>
 			option.setName('shame')
 				.setDescription('Shames the user in chat. Posts to wherever command is called.')
-				.addChoices([
-					['Yes', 'yes'],
-					['No', 'no'],
-				])),
+				.addChoices(
+					{ name: 'Yes', value: 'yes' },
+					{ name: 'No', value:  'no' },
+				)),
 	async execute(interaction) {
 		if (!interaction.member.roles.cache.has(modRoleId)) {
 			return interaction.reply({

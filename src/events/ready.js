@@ -1,4 +1,4 @@
-const { guildId, modRoleId, memeChannelId } = require('../../config.json');
+const { guildId, memeChannelId } = require('../../config.json');
 const { createDatabase, getGiveaways } = require('../helpers/dbModel');
 const { createTimeout } = require('../helpers/giveawayTimeouts');
 const fs = require('fs');
@@ -18,22 +18,6 @@ const startActiveGiveaways = (guild) => {
 					.catch(console.error);
 			})
 			.catch(console.error);
-	}
-};
-
-const setModCommandPerms = async (guild) => {
-	const commands = await guild.commands.fetch();
-	const permissions = [
-		{
-			id: modRoleId,
-			type: 'ROLE',
-			permission: true,
-		},
-	];
-	const modCommands = ['ban', 'kick', 'timeout', 'warn'];
-	for (const commandName of modCommands) {
-		const foundCommand = await commands.find(command => command.name === commandName);
-		await foundCommand.permissions.add({ permissions });
 	}
 };
 
@@ -63,8 +47,6 @@ module.exports = {
 		const guild = client.guilds.cache.get(guildId);
 
 		createDatabase();
-
-		await setModCommandPerms(guild);
 
 		startActiveGiveaways(guild);
 
