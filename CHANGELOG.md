@@ -5,6 +5,10 @@
 - Emote role assigning
 - Socials feed (Send posts from specific Instagram or Twitter accounts to a specific channel)
 
+## v1.8.0 - 2022-06-01
+### Removed
+- Removed `discord-player` and all music functionality in favour of [standalone music player bot](https://github.com/SethCohen/Loudred). [[d97cce1]](https://github.com/SethCohen/Sencha/commit/d97cce14e1513850fc6dac89035685020b3fcb12)
+
 ## v1.7.0 - 2022-03-19
 ### Added
 - Added `/kick` [[4eade79]](https://github.com/SethCohen/Sencha/commit/4eade79ecffcff99cd00244aea90b7a1239f4209)
