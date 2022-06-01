@@ -2,9 +2,6 @@ const fs = require('fs');
 const { Client, Collection, Intents } = require('discord.js');
 const { token } = require('../config.json');
 
-const { Player } = require('discord-player');
-const { registerPlayerEvents } = require('./helpers/playerEvents');
-
 const client = new Client({
 	intents: [Intents.FLAGS.GUILDS,
 		Intents.FLAGS.GUILD_MESSAGES,
@@ -16,8 +13,6 @@ const client = new Client({
 });
 
 client.commands = new Collection();
-client.player = new Player(client);
-registerPlayerEvents(client.player);
 
 const commandFiles = fs.readdirSync('./src/commands').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {

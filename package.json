@@ -13,7 +13,6 @@
     "@discordjs/voice": "^0.8.0",
     "better-sqlite3": "^7.5.0",
     "discord-api-types": "^0.27.2",
-    "discord-player": "^5.2.2",
     "discord.js": "^13.6.0",
     "eslint": "^8.9.0",
     "ms": "^2.1.3",
