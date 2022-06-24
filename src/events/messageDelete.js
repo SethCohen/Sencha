@@ -8,6 +8,8 @@ module.exports = {
 			return false;
 		}
 
+		global.snipe = message;
+
 		try {
 			const embed = new MessageEmbed()
 				.setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL() })

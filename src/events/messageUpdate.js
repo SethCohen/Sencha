@@ -7,6 +7,8 @@ module.exports = {
 			return false;
 		}
 
+		global.snipe = oldMessage;
+
 		try {
 			if (oldMessage.content !== newMessage.content) {
 				const embed = new MessageEmbed()
