@@ -13,7 +13,16 @@ module.exports = {
 		),
 	async execute(interaction) {
 		const user = interaction.options.getUser('user');
-		const logs = await getUserPunishmentLogs(user.id);
+		let logs = await getUserPunishmentLogs(user.id);
+
+		if (!logs) {
+			logs = {
+				timesBanned: 0,
+				timesKicked: 0,
+				timesTimeout: 0,
+				timesWarned: 0,
+			};
+		}
 
 		const embed = new MessageEmbed()
 			.setAuthor({ name: user.tag, iconURL:user.displayAvatarURL() })
