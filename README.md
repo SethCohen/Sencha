@@ -7,24 +7,9 @@ This bot isn't meant to be used for any other Discord servers - although possibl
 ---
 
 ## Features
-- Music playing
 - Fun inside joke commands
 - Utility & Moderation 
 - Automatically posts wholesome memes to #memes :)
-
-## Music Commands:
-- `/clear` Clears queue.
-- `/disconnect` Disconnects bot from channel.
-- `/jump <track #>` Jumps to song in queue.
-- `/loop <mode>` Available modes: `Off` `Track` `Queue` `Autoplay`
-- `/np` Shows currently playing song.
-- `/pause` Pauses current song.
-- `/resume` Resumes current song.
-- `/play <url>` Adds song to bottom of queue.
-- `/playnext <url>` Adds song to top of queue.
-- `/seek <time>` Goes to specified time in seconds.
-- `/shuffle` Shuffles queue.
-- `/skip` Skips currently playing song.
 
 ## Fun Commands:
 - `/servercopypasta <user> <prefix>`
