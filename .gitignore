@@ -4,3 +4,4 @@ config.json
 *.json
 /src/database.sqlite
 /src/assets/wholesome-memes/
+/src/commands/brickshekel.js
