@@ -5,7 +5,7 @@ function createDatabase() {
 
 	const createStatements = [
 		'CREATE TABLE IF NOT EXISTS giveaways(messageId TEXT PRIMARY KEY, channelId TEXT, prize TEXT, amountWinners TEXT, startDate TEXT, endDate TEXT)',
-		'CREATE TABLE IF NOT EXISTS punishmentLogs(user TEXT UNIQUE, timesBanned INTEGER, timesKicked INTEGER, timesTimeout INTEGER, timesWarned INTEGER)',
+		'CREATE TABLE IF NOT EXISTS punishmentLogs(user TEXT UNIQUE, timesBanned INTEGER, timesKicked INTEGER, timesTimeout INTEGER, timesWarned INTEGER, timesBricked INTEGER)',
 	].map(sql => db.prepare(sql));
 
 	for (const createStatement of createStatements) {
@@ -71,8 +71,8 @@ function getGiveaway(messageId) {
 function updatePunishmentLogs(user, column) {
 	const db = new Database('./src/database.sqlite');
 	const insertStatement = db.prepare(`
-			INSERT OR IGNORE INTO punishmentLogs (user, timesBanned, timesKicked, timesTimeout, timesWarned) 
-			VALUES (@user, 0, 0, 0, 0)
+			INSERT OR IGNORE INTO punishmentLogs (user, timesBanned, timesKicked, timesTimeout, timesWarned, timesBricked) 
+			VALUES (@user, 0, 0, 0, 0, 0)
 		`);
 	insertStatement.run({
 		user: user,
@@ -90,6 +90,9 @@ function updatePunishmentLogs(user, column) {
 		break;
 	case 'timesWarned':
 		updateStatement = db.prepare('UPDATE punishmentLogs SET timesWarned = timesWarned + 1 WHERE user = @user');
+		break;
+	case 'timesBricked':
+		updateStatement = db.prepare('UPDATE punishmentLogs SET timesBricked = timesBricked + 1 WHERE user = @user');
 		break;
 	}
 	updateStatement.run({ user: user });

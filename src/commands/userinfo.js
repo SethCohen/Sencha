@@ -21,6 +21,7 @@ module.exports = {
 				timesKicked: 0,
 				timesTimeout: 0,
 				timesWarned: 0,
+				timesBricked: 0,
 			};
 		}
 
@@ -31,7 +32,8 @@ module.exports = {
 				{ name: 'Banned', value: logs.timesBanned.toString() },
 				{ name: 'Kicked', value: logs.timesKicked.toString() },
 				{ name: 'Timeout', value: logs.timesTimeout.toString() },
-				{ name: 'Warned', value: logs.timesWarned.toString() });
+				{ name: 'Warned', value: logs.timesWarned.toString() },
+				{ name: 'Bricked', value: logs.timesBricked.toString() });
 
 		return interaction.reply({ embeds: [embed] });
 

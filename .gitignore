@@ -5,3 +5,4 @@ config.json
 /src/database.sqlite
 /src/assets/wholesome-memes/
 /src/commands/brickshekel.js
+/src/helpers/updateDatabases.js
