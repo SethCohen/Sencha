@@ -1,5 +1,5 @@
 const { logChannelId } = require('../../config.json');
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('@discordjs/builders');
 
 module.exports = {
 	name: 'messageDelete',
@@ -10,10 +10,12 @@ module.exports = {
 
 		global.snipe = message;
 
+		console.log(message);
+
 		try {
-			const embed = new MessageEmbed()
+			const embed = new EmbedBuilder()
 				.setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL() })
-				.setColor('#ff9595')
+				.setColor(0xff9595)
 				.setDescription(`Message Deleted in ${message.channel} from ${message.author}.\n${message.content}`)
 				.setTimestamp(message.createdTimestamp)
 				.setFooter({ text: 'The bot creator doesnt like logging :(' });

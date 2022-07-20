@@ -1,5 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('@discordjs/builders');
 const { modChannelId, modRoleId } = require('../../config.json');
 const ms = require('ms');
 const { updatePunishmentLogs } = require('../helpers/dbModel');
@@ -19,9 +18,9 @@ const timeoutUser = (interaction, member, duration, reason, shame) => {
 
 const logToModChannel = (interaction, user, duration, reason) => {
 	try {
-		const embed = new MessageEmbed()
+		const embed = new EmbedBuilder()
 			.setAuthor({ name: user.tag, iconURL:user.displayAvatarURL() })
-			.setColor('#bc95ff')
+			.setColor(0xbc95ff)
 			.setDescription(`User has been muted.\n**Duration:** ${ms(duration, { long: true })}\n**Reason:** ${reason}\n**Mute Author:** ${interaction.member}`)
 			.setTimestamp(interaction.createdTimestamp)
 			.setFooter({ text: 'The bot creator doesnt like logging :(' });

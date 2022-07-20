@@ -1,5 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('@discordjs/builders');
 const { addGiveaway, deleteGiveaway, getGiveaway } = require('../helpers/dbModel');
 const { createTimeout, cancelTimeout } = require('../helpers/giveawayTimeouts');
 
@@ -82,9 +81,9 @@ module.exports = {
 				return interaction.editReply('Improper time range selected. Please try again!');
 			}
 
-			const embed = new MessageEmbed()
+			const embed = new EmbedBuilder()
 				.setTitle(`New Giveaway Created!\nPrize: ${prize}`)
-				.setColor('#9eeeff')
+				.setColor(0x9eeeff)
 				.setDescription(`**Amount of winners:** ${amountWinners}\n**Ends:** ${dateEnd.toString()}\n**Hosted by:** ${interaction.user}\n\nReact with 🎁 to enter!`)
 				.setFooter({ text: `Giveaway message id: ${message.id}` });
 
@@ -104,6 +103,7 @@ module.exports = {
 				.then(channel => {
 					channel.messages.fetch(giveaway.messageId)
 						.then(async message => {
+							console.log(message);
 
 							if (interaction.user !== message.interaction.user) {
 								return await interaction.editReply({ content: 'You can\'t end this giveaway. You are not the giveaway author.' });
@@ -114,9 +114,9 @@ module.exports = {
 							const successMessage = `Congratulations to all winners and thank you to all those who entered!\n**Winner(s):** ${winners}`;
 							const failMessage = 'No one joined the giveaway thus there are no winners!';
 
-							const embed = new MessageEmbed()
+							const embed = new EmbedBuilder()
 								.setTitle(`Giveaway Ended!\nPrize: ${giveaway.prize}`)
-								.setColor('#9eeeff')
+								.setColor(0x9eeeff)
 								.setDescription(winners.length ? successMessage : failMessage)
 								.setFooter({ text: `Giveaway message id: ${message.id}\nEnded on` })
 								.setTimestamp(Number(giveaway.endDate));
@@ -148,9 +148,9 @@ module.exports = {
 							const successMessage = `Congratulations to all winners and thank you to all those who entered!\n**New Winner(s):** ${winners}`;
 							const failMessage = 'No one joined the giveaway thus there are no winners!';
 
-							const embed = new MessageEmbed()
+							const embed = new EmbedBuilder()
 								.setTitle('Giveaway Rerolled!')
-								.setColor('#9eeeff')
+								.setColor(0x9eeeff)
 								.setDescription(winners.length ? successMessage : failMessage)
 								.setFooter({ text: `Giveaway message id: ${message.id}` });
 
@@ -173,9 +173,9 @@ module.exports = {
 								return await interaction.editReply({ content: 'You can\'t delete this giveaway. You are not the giveaway author.' });
 							}
 
-							const embed = new MessageEmbed()
+							const embed = new EmbedBuilder()
 								.setTitle('Giveaway Cancelled And Deleted.')
-								.setColor('#9eeeff')
+								.setColor(0x9eeeff)
 								.setDescription('Aww....')
 								.setFooter({ text: `Giveaway message id: ${message.id}` });
 

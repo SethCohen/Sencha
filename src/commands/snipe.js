@@ -1,5 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('@discordjs/builders');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -8,10 +7,10 @@ module.exports = {
 	async execute(interaction) {
 
 		try {
-			const embed = new MessageEmbed()
-				.setAuthor({ name: global.snipe.author.username, iconURL: global.snipe.author.displayAvatarURL() })
-				.setDescription(global.snipe.content)
-				.setTimestamp(global.snipe.createdAt);
+			const embed = new EmbedBuilder()
+				.setAuthor({ name: snipe.author.username, iconURL: snipe.author.displayAvatarURL() })
+				.setDescription(snipe.content)
+				.setTimestamp(snipe.createdAt);
 
 			return await interaction.reply({ embeds: [embed] });
 		}

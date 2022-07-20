@@ -1,5 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('@discordjs/builders');
 const { getUserPunishmentLogs } = require('../helpers/dbModel');
 
 module.exports = {
@@ -25,7 +24,7 @@ module.exports = {
 			};
 		}
 
-		const embed = new MessageEmbed()
+		const embed = new EmbedBuilder()
 			.setAuthor({ name: user.tag, iconURL:user.displayAvatarURL() })
 			.setDescription('Times...')
 			.addFields(

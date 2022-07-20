@@ -1,5 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('@discordjs/builders');
 const { modChannelId, modRoleId } = require('../../config.json');
 const { updatePunishmentLogs } = require('../helpers/dbModel');
 
@@ -13,9 +12,9 @@ const warnUser = (interaction, user, reason, shame) => {
 
 const logToModChannel = (interaction, user, reason) => {
 	try {
-		const embed = new MessageEmbed()
+		const embed = new EmbedBuilder()
 			.setAuthor({ name: user.tag, iconURL:user.displayAvatarURL() })
-			.setColor('#bc95ff')
+			.setColor(0xbc95ff)
 			.setDescription(`User has been warned.\n**Reason:** ${reason}\n**Warn Author:** ${interaction.member}`)
 			.setTimestamp(interaction.createdTimestamp)
 			.setFooter({ text: 'The bot creator doesnt like logging :(' });
