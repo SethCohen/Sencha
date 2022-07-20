@@ -5,6 +5,26 @@
 - Emote role assigning
 - Socials feed (Send posts from specific Instagram or Twitter accounts to a specific channel)
 
+## 1.0.0 (2022-07-20)
+
+
+### Features
+
+* added `/snipe` ([a10dbdb](https://github.com/SethCohen/Sencha/commit/a10dbdb229275a04d9a94547a4dc1d9202b29fa5))
+* added brick tracking support ([95984c4](https://github.com/SethCohen/Sencha/commit/95984c485234b439fb5db3e44634c3453153f66a))
+* added new brick gif ([4e0ae14](https://github.com/SethCohen/Sencha/commit/4e0ae1467709768ee7bb0050e83157f78a7de7df))
+
+
+### Bug Fixes
+
+* fix undefined user info ([8b3a1ea](https://github.com/SethCohen/Sencha/commit/8b3a1ea14a372e09b91131870baaa29bed51f1ff))
+* fixed deprecation changes from discord.js v13 to v14 ([e1fc44f](https://github.com/SethCohen/Sencha/commit/e1fc44f95d38f852b4b4dcd287836f384733cfad))
+
+
+### Performance Improvements
+
+* updated dependencies ([25047c3](https://github.com/SethCohen/Sencha/commit/25047c3558922bc452ae22944044c0c99c47f615))
+
 ## v1.8.0 - 2022-06-01
 ### Removed
 - Removed `discord-player` and all music functionality in favour of [standalone music player bot](https://github.com/SethCohen/Loudred). [[d97cce1]](https://github.com/SethCohen/Sencha/commit/d97cce14e1513850fc6dac89035685020b3fcb12)
