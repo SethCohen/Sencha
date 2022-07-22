@@ -10,6 +10,7 @@ This bot isn't meant to be used for any other Discord servers - although possibl
 - Fun inside joke commands
 - Utility & Moderation 
 - Automatically posts wholesome memes to #memes :)
+- Starboard system
 
 ## Fun Commands:
 - `/servercopypasta <user> <prefix>`
@@ -18,7 +19,8 @@ This bot isn't meant to be used for any other Discord servers - although possibl
   - `prefix` prefaces the copypasta.
   - e.g. `/servercopypasta No swearing in`
     - Sends `No swearing in our good christian atheist muslim jewish buddhist hindu taoist shinto sikh various aboriginal religions wicca pagan orange juice pastafarianism tea club server!` to chat.
-
+  
+- `/starstats` Posts starboard leaderboard
 - `/brick <user>`
   - Posts a gif of someone throwing a brick at a specified user.
 
@@ -30,6 +32,7 @@ This bot isn't meant to be used for any other Discord servers - although possibl
 - `/giveaway end <giveaway message id>`
 - `/giveaway reroll <giveaway channel id> <giveaway message id>`
 - `/giveaway delete <giveaway message id>`
+- `/snipe`
 
 
 ## Moderation Commands:
