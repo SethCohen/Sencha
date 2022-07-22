@@ -123,11 +123,13 @@ function insertStarboard(starboardId, messageId, messageUrl, reactionCount) {
 	db.close();
 }
 
-function getStarboard(messageId) {
+async function getStarboard(messageId) {
 	const db = new Database('./src/database.sqlite');
 
 	const statement = db.prepare('SELECT starboardId FROM starboardMessages WHERE messageId = @messageId');
 	const result = statement.get({ messageId: messageId });
+
+	// console.log(result);
 	db.close();
 	return result;
 }

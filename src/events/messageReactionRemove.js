@@ -34,7 +34,6 @@ module.exports = {
 						channel.messages.fetch(starboard.starboardId)
 							.then(message => {
 								message.edit({ embeds: [embed] });
-								removeFromStarboard(messageReaction.message.id);
 								starboardUsers(messageReaction.message.author.id, -1, 0);
 								starboardUsers(user.id, 0, -1);
 							})
