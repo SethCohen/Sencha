@@ -108,15 +108,17 @@ function getUserPunishmentLogs(user) {
 	return result;
 }
 
-function updateStarboard(starboardId, messageId) {
+function insertStarboard(starboardId, messageId, messageUrl, reactionCount) {
 	const db = new Database('./src/database.sqlite');
 	const insertStatement = db.prepare(`
-			INSERT OR IGNORE INTO starboard (starboardId, messageId) 
-			VALUES (@starboardId, @messageId)
+			INSERT OR REPLACE INTO starboardMessages (starboardId, messageId, messageUrl, reactionCount) 
+			VALUES (@starboardId, @messageId, @messageUrl, @reactionCount)
 		`);
 	insertStatement.run({
 		starboardId: starboardId,
 		messageId: messageId,
+		messageUrl: messageUrl,
+		reactionCount: reactionCount,
 	});
 	db.close();
 }
@@ -124,7 +126,7 @@ function updateStarboard(starboardId, messageId) {
 function getStarboard(messageId) {
 	const db = new Database('./src/database.sqlite');
 
-	const statement = db.prepare('SELECT * FROM starboard WHERE messageId = @messageId');
+	const statement = db.prepare('SELECT starboardId FROM starboardMessages WHERE messageId = @messageId');
 	const result = statement.get({ messageId: messageId });
 	db.close();
 	return result;
@@ -133,10 +135,94 @@ function getStarboard(messageId) {
 function removeFromStarboard(messageId) {
 	const db = new Database('./src/database.sqlite');
 
-	const statement = db.prepare('DELETE FROM starboard WHERE messageId = @messageId');
+	const statement = db.prepare('DELETE FROM starboardMessages WHERE messageId = @messageId');
 	statement.run({ messageId: messageId });
 	db.close();
 }
+
+function starboardUsers(user, received, gave) {
+	const db = new Database('./src/database.sqlite');
+	const insertStatement = db.prepare(`
+			INSERT OR IGNORE INTO starboardUsers (user, received, gave) 
+			VALUES (@user, @received, @gave)
+		`);
+	insertStatement.run({
+		user: user,
+		received: 0,
+		gave: 0,
+	});
+
+	const updateStatement = db.prepare(`
+		UPDATE 
+			starboardUsers
+		SET 
+			received = received + @received,
+			gave = gave + @gave
+		WHERE 
+			user = @user
+		`);
+	updateStatement.run({
+		user: user,
+		received: received,
+		gave: gave,
+	});
+
+	db.close();
+}
+
+
+function getStarboardStats() {
+	const db = new Database('./src/database.sqlite');
+
+	const statement1 = db.prepare(`
+				SELECT * FROM
+					(SELECT COUNT(*) AS messageCount FROM starboardMessages), 
+					(SELECT SUM(reactionCount) AS totalStarCount FROM starboardMessages)
+				`);
+	const totals = statement1.get();
+
+	const statement2 = db.prepare(`
+				SELECT 
+					messageId, messageUrl, reactionCount 
+				FROM
+					starboardMessages
+				ORDER BY 
+					reactionCount DESC
+				LIMIT 3
+				`);
+	const topPosts = statement2.all();
+
+	const statement3 = db.prepare(`
+				SELECT
+					user, received
+				FROM
+					starboardUsers
+				ORDER BY
+					received DESC
+				LIMIT 3
+				`);
+	const topReceived = statement3.all();
+
+	const statement4 = db.prepare(`
+				SELECT
+					user, gave
+				FROM
+					starboardUsers
+				ORDER BY
+					gave DESC
+				LIMIT 3
+				`);
+	const topGave = statement4.all();
+
+	return {
+		messageCount: totals.messageCount,
+		totalStarCount: totals.totalStarCount,
+		topPosts: topPosts,
+		topReceived: topReceived,
+		topGave: topGave,
+	};
+}
+
 
 module.exports = {
 	createDatabase,
@@ -146,7 +232,9 @@ module.exports = {
 	getGiveaway,
 	updatePunishmentLogs,
 	getUserPunishmentLogs,
-	updateStarboard,
+	insertStarboard,
 	getStarboard,
 	removeFromStarboard,
+	getStarboardStats,
+	starboardUsers,
 };
