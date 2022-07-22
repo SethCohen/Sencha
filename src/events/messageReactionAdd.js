@@ -14,20 +14,20 @@ module.exports = {
 				})
 				.setTitle(`🌟 ${messageReaction.count}`)
 				.setColor(0xfdd835)
-				.setDescription(`${messageReaction.message.content}.\n\n[Jump To Message](${messageReaction.message.url})`)
+				.setDescription(`${messageReaction.message.content}\n\n[Jump To Message](${messageReaction.message.url})`)
 				.setTimestamp(messageReaction.message.createdTimestamp);
 
 			if (messageReaction.message.attachments.size > 0) embed.setImage(messageReaction.message.attachments.first().url);
 
 			messageReaction.message.guild.channels.fetch(starboardChannel)
 				.then(async channel => {
-					if (messageReaction.count === 1) {
+					if (messageReaction.count === 5) {
 						const starboardMsg = await channel.send({ embeds: [embed] });
 						insertStarboard(starboardMsg.id, messageReaction.message.id, messageReaction.message.url, messageReaction.count);
 						starboardUsers(messageReaction.message.author.id, 1, 0);
 						starboardUsers(user.id, 0, 1);
 					}
-					else if (messageReaction.count > 1) {
+					else if (messageReaction.count > 5) {
 						const starboard = await getStarboard(messageReaction.message.id);
 						channel.messages.fetch(starboard.starboardId)
 							.then(message => {
