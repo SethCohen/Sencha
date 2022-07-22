@@ -5,6 +5,14 @@
 - Emote role assigning
 - Socials feed (Send posts from specific Instagram or Twitter accounts to a specific channel)
 
+## [1.1.0](https://github.com/SethCohen/Sencha/compare/v1.0.0...v1.1.0) (2022-07-22)
+
+
+### Features
+
+* added `/starstats` ([bcb24ad](https://github.com/SethCohen/Sencha/commit/bcb24add49519b3849977525619f1f7e6c29f932))
+* added starboard support ([c893b01](https://github.com/SethCohen/Sencha/commit/c893b01bfc7510ffeff4abca840b7c7685ffb0ae))
+
 ## 1.0.0 (2022-07-20)
 
 
@@ -69,4 +77,3 @@
 ### Performance Improvements
 
 * updated dependencies ([25047c3](https://github.com/SethCohen/Sencha/commit/25047c3558922bc452ae22944044c0c99c47f615))
-
