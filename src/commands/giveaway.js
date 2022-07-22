@@ -103,7 +103,7 @@ module.exports = {
 				.then(channel => {
 					channel.messages.fetch(giveaway.messageId)
 						.then(async message => {
-							console.log(message);
+							// console.log(message);
 
 							if (interaction.user !== message.interaction.user) {
 								return await interaction.editReply({ content: 'You can\'t end this giveaway. You are not the giveaway author.' });

@@ -10,8 +10,6 @@ module.exports = {
 
 		global.snipe = message;
 
-		console.log(message);
-
 		try {
 			const embed = new EmbedBuilder()
 				.setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL() })

@@ -108,6 +108,36 @@ function getUserPunishmentLogs(user) {
 	return result;
 }
 
+function updateStarboard(starboardId, messageId) {
+	const db = new Database('./src/database.sqlite');
+	const insertStatement = db.prepare(`
+			INSERT OR IGNORE INTO starboard (starboardId, messageId) 
+			VALUES (@starboardId, @messageId)
+		`);
+	insertStatement.run({
+		starboardId: starboardId,
+		messageId: messageId,
+	});
+	db.close();
+}
+
+function getStarboard(messageId) {
+	const db = new Database('./src/database.sqlite');
+
+	const statement = db.prepare('SELECT * FROM starboard WHERE messageId = @messageId');
+	const result = statement.get({ messageId: messageId });
+	db.close();
+	return result;
+}
+
+function removeFromStarboard(messageId) {
+	const db = new Database('./src/database.sqlite');
+
+	const statement = db.prepare('DELETE FROM starboard WHERE messageId = @messageId');
+	statement.run({ messageId: messageId });
+	db.close();
+}
+
 module.exports = {
 	createDatabase,
 	deleteGiveaway,
@@ -116,4 +146,7 @@ module.exports = {
 	getGiveaway,
 	updatePunishmentLogs,
 	getUserPunishmentLogs,
+	updateStarboard,
+	getStarboard,
+	removeFromStarboard,
 };

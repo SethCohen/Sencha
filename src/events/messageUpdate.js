@@ -4,7 +4,6 @@ module.exports = {
 	name: 'messageUpdate',
 	execute(oldMessage, newMessage) {
 		if (oldMessage.partial) {
-			console.log('test');
 			return false;
 		}
 
