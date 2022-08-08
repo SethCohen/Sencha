@@ -5,6 +5,19 @@
 - Emote role assigning
 - Socials feed (Send posts from specific Instagram or Twitter accounts to a specific channel)
 
+## [1.2.0](https://github.com/SethCohen/Sencha/compare/v1.1.0...v1.2.0) (2022-08-08)
+
+
+### Features
+
+* added docker support ([d0ddae0](https://github.com/SethCohen/Sencha/commit/d0ddae0a7ff710d622349f4e5c0ab5c1f0f82c97))
+* changed pin threshold ([4d68e5c](https://github.com/SethCohen/Sencha/commit/4d68e5caa373cecaa404fff080381969c2de9b41))
+
+
+### Bug Fixes
+
+* fixed starboard msg being delete on all reaction removes ([d552da6](https://github.com/SethCohen/Sencha/commit/d552da6b8a9d59ffebb9b1db8a2e2a8b4b6f8c62))
+
 ## [1.1.0](https://github.com/SethCohen/Sencha/compare/v1.0.0...v1.1.0) (2022-07-22)
 
 
