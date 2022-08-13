@@ -6,8 +6,9 @@ const cron = require('node-cron');
 
 const startActiveGiveaways = (guild) => {
 	const giveaways = getGiveaways();
-	console.log('Giveaways Found:', giveaways);
+	if (!giveaways.length) return;
 
+	console.log('Giveaways Found:', giveaways);
 	for (const giveaway of giveaways) {
 		guild.channels.fetch(giveaway.channelId)
 			.then(channel => {
