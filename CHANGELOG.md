@@ -5,6 +5,14 @@
 - Emote role assigning
 - Socials feed (Send posts from specific Instagram or Twitter accounts to a specific channel)
 
+## [1.2.1](https://github.com/SethCohen/Sencha/compare/v1.2.0...v1.2.1) (2022-08-13)
+
+
+### Bug Fixes
+
+* added catch for interaction edits ([4160f34](https://github.com/SethCohen/Sencha/commit/4160f34324604c888e2371b04db69fe3329cc7dd))
+* added catch for null giveaways ([fe850eb](https://github.com/SethCohen/Sencha/commit/fe850eb486eefb8d3610867b9c4dec306b50bb83))
+
 ## [1.2.0](https://github.com/SethCohen/Sencha/compare/v1.1.0...v1.2.0) (2022-08-08)
 
 
