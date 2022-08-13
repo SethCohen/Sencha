@@ -3,9 +3,8 @@ const { EmbedBuilder } = require('@discordjs/builders');
 module.exports = {
 	name: 'messageUpdate',
 	execute(oldMessage, newMessage) {
-		if (oldMessage.partial) {
-			return false;
-		}
+		if (oldMessage.partial) return false;
+		if (oldMessage.interaction) return false;
 
 		global.snipe = oldMessage;
 
