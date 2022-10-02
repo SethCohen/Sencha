@@ -8,7 +8,7 @@ module.exports = {
 			return false;
 		}
 
-		global.snipe = message;
+		global.snipe.set(message.channelId, message);
 
 		try {
 			const embed = new EmbedBuilder()
