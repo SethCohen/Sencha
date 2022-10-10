@@ -1,6 +1,6 @@
 const fs = require('fs');
 const { Client, Collection, GatewayIntentBits, Partials } = require('discord.js');
-const { token } = require('../config.json');
+const { clientToken } = require('../config.json');
 
 global.snipe = new Map();
 
@@ -35,4 +35,4 @@ for (const file of eventFiles) {
 	}
 }
 
-client.login(token);
+client.login(clientToken);

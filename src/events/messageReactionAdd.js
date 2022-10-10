@@ -1,4 +1,4 @@
-const { starboardChannel } = require('../../config.json');
+const { starboardChannelId } = require('../../config.json');
 const { EmbedBuilder } = require('@discordjs/builders');
 const { insertStarboard, getStarboard, starboardUsers } = require('../helpers/dbModel');
 module.exports = {
@@ -19,7 +19,7 @@ module.exports = {
 
 			if (messageReaction.message.attachments.size > 0) embed.setImage(messageReaction.message.attachments.first().url);
 
-			messageReaction.message.guild.channels.fetch(starboardChannel)
+			messageReaction.message.guild.channels.fetch(starboardChannelId)
 				.then(async channel => {
 					if (messageReaction.count === 5) {
 						const starboardMsg = await channel.send({ embeds: [embed] });
