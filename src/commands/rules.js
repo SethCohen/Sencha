@@ -33,6 +33,12 @@ module.exports = {
 		case 7:
 			await interaction.reply({ content: '> **7. Chill, relax, and have fun.** 🍵' });
 			break;
+		case 69:
+			await interaction.reply({ content: '> **69. Nice.**' });
+			break;
+		case 1984:
+			await interaction.reply({ content: '> **1984. ████ ██ █████████ █████.**' });
+			break;
 		default:
 			return await interaction.reply({
 				content: `> **1. No gatekeeping or being pretentious.** No one likes a pretentious snob who goes "Ew coffee? Tea is way more superior" or "Bagged tea? Yikes."
