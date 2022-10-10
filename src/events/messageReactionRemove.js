@@ -23,6 +23,7 @@ module.exports = {
 				.then(async channel => {
 					if (messageReaction.count < 5) {
 						const starboard = await getStarboard(messageReaction.message.id);
+						if (!starboard) return null;
 						const starboardMsg = await channel.messages.fetch(starboard.starboardId);
 						await starboardMsg.delete();
 						removeFromStarboard(messageReaction.message.id);
