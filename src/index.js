@@ -2,6 +2,8 @@ const fs = require('fs');
 const { Client, Collection, GatewayIntentBits, Partials } = require('discord.js');
 const { token } = require('../config.json');
 
+global.snipe = new Map();
+
 const client = new Client({
 	intents: [GatewayIntentBits.Guilds,
 		GatewayIntentBits.GuildMessages,

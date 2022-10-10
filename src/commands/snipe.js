@@ -5,17 +5,19 @@ module.exports = {
 		.setName('snipe')
 		.setDescription('Snipes the last deleted/edited message.'),
 	async execute(interaction) {
+		const message = global.snipe.get(interaction.channelId);
 
-		try {
-			const embed = new EmbedBuilder()
-				.setAuthor({ name: snipe.author.username, iconURL: snipe.author.displayAvatarURL() })
-				.setDescription(snipe.content)
-				.setTimestamp(snipe.createdAt);
-
-			return await interaction.reply({ embeds: [embed] });
-		}
-		catch (e) {
+		if (message === undefined) {
 			return interaction.reply({ content: 'No message found.' });
 		}
+
+		const embed = new EmbedBuilder()
+			.setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
+			.setDescription(message.content)
+			.setTimestamp(message.createdAt);
+
+		global.snipe.delete(interaction.channelId); // don't show the same message twice
+
+		return await interaction.reply({ embeds: [embed] });
 	},
 };

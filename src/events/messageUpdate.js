@@ -6,7 +6,7 @@ module.exports = {
 		if (oldMessage.partial) return false;
 		if (oldMessage.interaction) return false;
 
-		global.snipe = oldMessage;
+		global.snipe.set(oldMessage.channelId, oldMessage);
 
 		try {
 			if (oldMessage.content !== newMessage.content) {
