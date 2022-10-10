@@ -5,6 +5,13 @@
 - Emote role assigning
 - Socials feed (Send posts from specific Instagram or Twitter accounts to a specific channel)
 
+## [1.2.2](https://github.com/SethCohen/Sencha/compare/v1.2.1...v1.2.2) (2022-10-10)
+
+
+### Bug Fixes
+
+* snipe is now per-channel instead of global ([#10](https://github.com/SethCohen/Sencha/issues/10)) ([5b7c4f8](https://github.com/SethCohen/Sencha/commit/5b7c4f80ae82977764f6e7709c82946e7bda8b45))
+
 ## [1.2.1](https://github.com/SethCohen/Sencha/compare/v1.2.0...v1.2.1) (2022-08-13)
 
 
