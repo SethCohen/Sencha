@@ -2,6 +2,15 @@ const { SlashCommandBuilder, EmbedBuilder } = require('@discordjs/builders');
 const { modChannelId, modRoleId } = require('../../config.json');
 const { updatePunishmentLogs } = require('../helpers/dbModel');
 
+/**
+ * Kicks a user from the server, adding a record to the database.
+ *
+ * @param interaction		The interaction object.
+ * @param user				The user to kick.
+ * @param reason			The reason for the kick.
+ * @param shame				Whether or not to shame the user in chat.
+ * @returns {Promise<void>}	Returns a message to chat.
+ */
 const kickUser = (interaction, user, reason, shame) => {
 	updatePunishmentLogs(user.id, 'timesKicked');
 	interaction.guild.members.kick(user, reason)
@@ -15,6 +24,14 @@ const kickUser = (interaction, user, reason, shame) => {
 
 };
 
+/**
+ * Logs the kick to the mod channel.
+ *
+ * @param interaction		The interaction object.
+ * @param user				The user that got kicked.
+ * @param reason			The reason for the kick.
+ * @returns {Promise<void>}	Returns a message to chat.
+ */
 const logToModChannel = (interaction, user, reason) => {
 	try {
 		const embed = new EmbedBuilder()

@@ -2,6 +2,15 @@ const { SlashCommandBuilder, EmbedBuilder } = require('@discordjs/builders');
 const { modChannelId, modRoleId } = require('../../config.json');
 const { updatePunishmentLogs } = require('../helpers/dbModel');
 
+/**
+ * Bans a user from the server, adding a record to the database.
+ *
+ * @param interaction		The interaction object.
+ * @param user				The user to ban.
+ * @param reason			The reason for the ban.
+ * @param shame				Whether or not to shame the user in chat.
+ * @returns {Promise<void>}	Returns a message to chat.
+ */
 const banUser = (interaction, user, reason, shame) => {
 	updatePunishmentLogs(user.id, 'timesBanned');
 	interaction.guild.members.ban(user, { days: 0, reason: reason })
@@ -15,6 +24,14 @@ const banUser = (interaction, user, reason, shame) => {
 
 };
 
+/**
+ * Logs the ban to the mod channel.
+ *
+ * @param interaction		The interaction object.
+ * @param user				The user that got banned.
+ * @param reason			The reason for the ban.
+ * @returns {Promise<void>} Returns a message to chat.
+ */
 const logToModChannel = (interaction, user, reason) => {
 	try {
 		const embed = new EmbedBuilder()

@@ -4,6 +4,11 @@ const { createTimeout } = require('../helpers/giveawayTimeouts');
 const fs = require('fs');
 const cron = require('node-cron');
 
+/**
+ * Checks database for giveaways that are ending soon and creates a timeout for them.
+ *
+ * @param guild	The guild that the giveaways are in.
+ */
 const startActiveGiveaways = (guild) => {
 	const giveaways = getGiveaways();
 	if (!giveaways.length) return;
@@ -22,6 +27,11 @@ const startActiveGiveaways = (guild) => {
 	}
 };
 
+/**
+ * Posts a meme to the meme channel every 24 hours
+ *
+ * @param guild The guild to post the meme in
+ */
 const autopostWholesomeMemes = (guild) => {
 	const files = fs.readdirSync('./src/assets/wholesome-memes/');
 

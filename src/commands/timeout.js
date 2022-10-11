@@ -3,6 +3,16 @@ const { modChannelId, modRoleId } = require('../../config.json');
 const ms = require('ms');
 const { updatePunishmentLogs } = require('../helpers/dbModel');
 
+/**
+ * Mutes a user from the server, adding a record to the database.
+ *
+ * @param interaction		The interaction object.
+ * @param member			The member to mute.
+ * @param duration			The duration of the mute.
+ * @param reason			The reason for the mute.
+ * @param shame				Whether or not to shame the user in chat.
+ * @returns {Promise<void>} Returns a message to chat.
+ */
 const timeoutUser = (interaction, member, duration, reason, shame) => {
 	updatePunishmentLogs(member.id, 'timesTimeout');
 	member.timeout(duration, reason)
@@ -16,6 +26,15 @@ const timeoutUser = (interaction, member, duration, reason, shame) => {
 
 };
 
+/**
+ * Logs the mute to the mod channel.
+ *
+ * @param interaction 		The interaction object.
+ * @param user				The user that got muted.
+ * @param duration			The duration of the mute.
+ * @param reason			The reason for the mute.
+ * @returns {Promise<void>} Returns a message to chat.
+ */
 const logToModChannel = (interaction, user, duration, reason) => {
 	try {
 		const embed = new EmbedBuilder()
