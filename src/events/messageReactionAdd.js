@@ -1,6 +1,7 @@
 const { starboardChannelId } = require('../../config.json');
-const { EmbedBuilder } = require('@discordjs/builders');
 const { insertStarboard, getStarboard, starboardUsers } = require('../helpers/dbModel');
+const { EmbedBuilder } = require('discord.js');
+
 module.exports = {
 	name: 'messageReactionAdd',
 	async execute(messageReaction, user) {

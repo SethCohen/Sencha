@@ -1,6 +1,6 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('@discordjs/builders');
 const { modChannelId, modRoleId } = require('../../config.json');
 const { updatePunishmentLogs } = require('../helpers/dbModel');
+const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
 
 /**
  * Warns a user from the server, adding a record to the database.

@@ -1,6 +1,6 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('@discordjs/builders');
 const { addGiveaway, deleteGiveaway, getGiveaway } = require('../helpers/dbModel');
 const { createTimeout, cancelTimeout } = require('../helpers/giveawayTimeouts');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()

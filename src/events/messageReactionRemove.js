@@ -1,6 +1,7 @@
 const { starboardChannelId } = require('../../config.json');
 const { getStarboard, removeFromStarboard, starboardUsers } = require('../helpers/dbModel');
-const { EmbedBuilder } = require('@discordjs/builders');
+const { EmbedBuilder } = require('discord.js');
+
 module.exports = {
 	name: 'messageReactionRemove',
 	async execute(messageReaction, user) {

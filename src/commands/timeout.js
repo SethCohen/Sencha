@@ -1,7 +1,7 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('@discordjs/builders');
 const { modChannelId, modRoleId } = require('../../config.json');
 const ms = require('ms');
 const { updatePunishmentLogs } = require('../helpers/dbModel');
+const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
 
 /**
  * Mutes a user from the server, adding a record to the database.

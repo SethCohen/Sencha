@@ -1,5 +1,5 @@
 const { logChannelId } = require('../../config.json');
-const { EmbedBuilder } = require('@discordjs/builders');
+const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
 	name: 'messageDelete',

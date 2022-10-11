@@ -1,4 +1,5 @@
 const { InteractionType } = require('discord-api-types/v10');
+
 module.exports = {
 	name: 'interactionCreate',
 	execute(interaction) {
