@@ -59,3 +59,24 @@ Commands:
 - `/userinfo <user>`
   - Prints how many the user has been punished.
   - e.g. `/userinfo user: @Seth`
+
+## Contributing:
+- Fork the repository
+- Create a `config.json` file in the root directory of the project.
+```json
+{
+  "clientId": "bot client id",
+  "clientToken": "bot client token",
+  "guildId": "guild id",
+  "starboardChannelId": "OPTIONAL: Only include if need starboard functionality",
+  "memeChannelId": "OPTIONAL: Only include if need wholesome meme posting functionality",
+  "logChannelId": "OPTIONAL: Only include if need message logging functionality",
+  "modChannelId": "OPTIONAL: Only include if need mod logging functionality",
+  "modRoleId": "OPTIONAL: Only include if need mod command functionality"
+}
+```
+- Run `npm install` to install dependencies
+- Make your changes
+- Follow [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/)
+- Create a pull request
+
