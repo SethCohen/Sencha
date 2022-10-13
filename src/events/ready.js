@@ -41,6 +41,11 @@ const autopostWholesomeMemes = (guild) => {
 		return;
 	}
 
+	if (!files.length) {
+		console.log('No files found in src/assets/wholesome-memes/.');
+		return;
+	}
+
 	// Schedules daily autoposting for 12:00pm EST
 	cron.schedule('0 12 * * *', () => {
 		const chosenFile = files[Math.floor(Math.random() * files.length)];
