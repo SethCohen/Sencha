@@ -20,15 +20,20 @@ module.exports = {
 
 			if (messageReaction.message.attachments.size > 0) embed.setImage(messageReaction.message.attachments.first().url);
 
+			if (!starboardChannelId) {
+				console.error('starboardChannelId is not specified in config.json. Cannot pin to starboard.');
+				return;
+			}
+
 			messageReaction.message.guild.channels.fetch(starboardChannelId)
 				.then(async channel => {
-					if (messageReaction.count === 5) {
+					if (messageReaction.count === 1) {
 						const starboardMsg = await channel.send({ embeds: [embed] });
 						insertStarboard(starboardMsg.id, messageReaction.message.id, messageReaction.message.url, messageReaction.count);
 						starboardUsers(messageReaction.message.author.id, 1, 0);
 						starboardUsers(user.id, 0, 1);
 					}
-					else if (messageReaction.count > 5) {
+					else if (messageReaction.count > 1) {
 						const starboard = await getStarboard(messageReaction.message.id);
 						channel.messages.fetch(starboard.starboardId)
 							.then(message => {

@@ -20,9 +20,14 @@ module.exports = {
 
 			if (messageReaction.message.attachments.size > 0) embed.setImage(messageReaction.message.attachments.first().url);
 
+			if (!starboardChannelId) {
+				console.error('starboardChannelId is not specified in config.json. Cannot remove from starboard.');
+				return;
+			}
+
 			messageReaction.message.guild.channels.fetch(starboardChannelId)
 				.then(async channel => {
-					if (messageReaction.count < 5) {
+					if (messageReaction.count < 1) {
 						const starboard = await getStarboard(messageReaction.message.id);
 						if (!starboard) return null;
 						const starboardMsg = await channel.messages.fetch(starboard.starboardId);
