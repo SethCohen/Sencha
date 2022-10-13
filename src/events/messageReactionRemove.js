@@ -29,7 +29,7 @@ const handleStarboardReactionRemove = async (messageReaction, user) => {
 
 	messageReaction.message.guild.channels.fetch(starboardChannelId)
 		.then(async channel => {
-			if (messageReaction.count < 1) {
+			if (messageReaction.count < 5) {
 				const starboard = await getStarboard(messageReaction.message.id);
 				if (!starboard) return null;
 				const starboardMsg = await channel.messages.fetch(starboard.starboardId);
