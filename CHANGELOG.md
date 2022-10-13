@@ -5,6 +5,19 @@
 - Emote role assigning
 - Socials feed (Send posts from specific Instagram or Twitter accounts to a specific channel)
 
+## [1.2.3](https://github.com/SethCohen/Sencha/compare/v1.2.2...v1.2.3) (2022-10-13)
+
+
+### Bug Fixes
+
+* **ban|kick|timeout|warn:** added catch for no modChannelId specified ([d1f8691](https://github.com/SethCohen/Sencha/commit/d1f869190aab03c10c9a05aedd54a166a6582e98))
+* **dbModel:** fixed create statements to include starboard tables ([1bb4081](https://github.com/SethCohen/Sencha/commit/1bb40819e9da68f685f886cedd9221c8b96a80e8))
+* fixed error on no `wholesome-memes` folder ([cc968dd](https://github.com/SethCohen/Sencha/commit/cc968dd6482d76f75eb90684f866e6881dcd5ba1))
+* **messageDelete:** added catch for no logChannelId specified ([c48c2a7](https://github.com/SethCohen/Sencha/commit/c48c2a74a80cd1158de01be2a595b5dabf37b767))
+* **messageReactionAdd|messageReactionRemove:** added catch for no starboardChannelId specified ([ddd5bbd](https://github.com/SethCohen/Sencha/commit/ddd5bbdf955bb2f605d0a0542f6087ccc9dc9353))
+* **ready:** added catch for no meme files in wholesome-memes folder ([e6e5ebb](https://github.com/SethCohen/Sencha/commit/e6e5ebb3fd88967b439032da13fcb4a479255ec8))
+* **ready:** added catch for no memeChannelId specified ([4280684](https://github.com/SethCohen/Sencha/commit/42806842d70b6c15be299667ec330261f4622fad))
+
 ## [1.2.2](https://github.com/SethCohen/Sencha/compare/v1.2.1...v1.2.2) (2022-10-10)
 
 
