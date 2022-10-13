@@ -33,6 +33,7 @@ const startActiveGiveaways = (guild) => {
  * @param guild The guild to post the meme in
  */
 const autopostWholesomeMemes = (guild) => {
+	if (!fs.existsSync('./src/assets/wholesome-memes/')) fs.mkdirSync('./src/assets/wholesome-memes/');
 	const files = fs.readdirSync('./src/assets/wholesome-memes/');
 
 	// Schedules daily autoposting for 12:00pm EST
