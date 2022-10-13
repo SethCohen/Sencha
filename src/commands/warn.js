@@ -36,6 +36,11 @@ const logToModChannel = (interaction, user, reason) => {
 			.setTimestamp(interaction.createdTimestamp)
 			.setFooter({ text: 'The bot creator doesnt like logging :(' });
 
+		if (!modChannelId) {
+			console.log('modChannelId is not specified in config.json. Cannot log warns.');
+			return;
+		}
+
 		interaction.guild.channels.fetch(modChannelId)
 			.then(channel => {
 				channel.send({ embeds: [embed] });
