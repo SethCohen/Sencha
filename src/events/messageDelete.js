@@ -18,6 +18,11 @@ module.exports = {
 				.setTimestamp(message.createdTimestamp)
 				.setFooter({ text: 'The bot creator doesnt like logging :(' });
 
+			if (!logChannelId) {
+				console.log('logChannelId is not specified in config.json. Cannot log deleted messages.');
+				return;
+			}
+
 			message.guild.channels.fetch(logChannelId)
 				.then(channel => {
 					channel.send({ embeds: [embed], files: [...message.attachments.values()] });
