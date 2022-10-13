@@ -36,6 +36,11 @@ const autopostWholesomeMemes = (guild) => {
 	if (!fs.existsSync('./src/assets/wholesome-memes/')) fs.mkdirSync('./src/assets/wholesome-memes/');
 	const files = fs.readdirSync('./src/assets/wholesome-memes/');
 
+	if (!memeChannelId) {
+		console.error('memeChannelId not specified in config.json. Cannot post wholesome memes anywhere.');
+		return;
+	}
+
 	// Schedules daily autoposting for 12:00pm EST
 	cron.schedule('0 12 * * *', () => {
 		const chosenFile = files[Math.floor(Math.random() * files.length)];
