@@ -6,6 +6,8 @@ function createDatabase() {
 	const createStatements = [
 		'CREATE TABLE IF NOT EXISTS giveaways(messageId TEXT PRIMARY KEY, channelId TEXT, prize TEXT, amountWinners TEXT, startDate TEXT, endDate TEXT)',
 		'CREATE TABLE IF NOT EXISTS punishmentLogs(user TEXT UNIQUE, timesBanned INTEGER, timesKicked INTEGER, timesTimeout INTEGER, timesWarned INTEGER, timesBricked INTEGER)',
+		'CREATE TABLE IF NOT EXISTS starboardMessages(starboardId TEXT, messageId TEXT UNIQUE, messageUrl TEXT, reactionCount INTEGER)',
+		'CREATE TABLE IF NOT EXISTS starboardUsers(user	TEXT UNIQUE, received INTEGER, gave INTEGER)',
 	].map(sql => db.prepare(sql));
 
 	for (const createStatement of createStatements) {
