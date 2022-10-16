@@ -5,6 +5,13 @@
 - Emote role assigning
 - Socials feed (Send posts from specific Instagram or Twitter accounts to a specific channel)
 
+## [1.3.0](https://github.com/SethCohen/Sencha/compare/v1.2.4...v1.3.0) (2022-10-16)
+
+
+### Features
+
+* **starstats:** added `/starstats <user>` ([ee6885b](https://github.com/SethCohen/Sencha/commit/ee6885b567e8a596af5aa184134baa21119dd7ec))
+
 ## [1.2.4](https://github.com/SethCohen/Sencha/compare/v1.2.3...v1.2.4) (2022-10-13)
 
 
