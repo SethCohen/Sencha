@@ -6,7 +6,7 @@ function createDatabase() {
 	const createStatements = [
 		'CREATE TABLE IF NOT EXISTS giveaways(messageId TEXT PRIMARY KEY, channelId TEXT, prize TEXT, amountWinners TEXT, startDate TEXT, endDate TEXT)',
 		'CREATE TABLE IF NOT EXISTS punishmentLogs(user TEXT UNIQUE, timesBanned INTEGER, timesKicked INTEGER, timesTimeout INTEGER, timesWarned INTEGER, timesBricked INTEGER)',
-		'CREATE TABLE IF NOT EXISTS starboardMessages(starboardId TEXT, messageId TEXT UNIQUE, messageUrl TEXT, reactionCount INTEGER)',
+		'CREATE TABLE IF NOT EXISTS starboardMessages(starboardId TEXT, messageId TEXT UNIQUE, messageUrl TEXT, reactionCount INTEGER, messageAuthorId TEXT)',
 		'CREATE TABLE IF NOT EXISTS starboardUsers(user	TEXT UNIQUE, received INTEGER, gave INTEGER)',
 	].map(sql => db.prepare(sql));
 
@@ -110,17 +110,18 @@ function getUserPunishmentLogs(user) {
 	return result;
 }
 
-function insertStarboard(starboardId, messageId, messageUrl, reactionCount) {
+function insertStarboard(starboardId, messageId, messageUrl, reactionCount, messageAuthorId) {
 	const db = new Database('./src/database.sqlite');
 	const insertStatement = db.prepare(`
-			INSERT OR REPLACE INTO starboardMessages (starboardId, messageId, messageUrl, reactionCount) 
-			VALUES (@starboardId, @messageId, @messageUrl, @reactionCount)
+			INSERT OR REPLACE INTO starboardMessages (starboardId, messageId, messageUrl, reactionCount, messageAuthorId) 
+			VALUES (@starboardId, @messageId, @messageUrl, @reactionCount, @messageAuthorId)
 		`);
 	insertStatement.run({
 		starboardId: starboardId,
 		messageId: messageId,
 		messageUrl: messageUrl,
 		reactionCount: reactionCount,
+		messageAuthorId: messageAuthorId,
 	});
 	db.close();
 }
@@ -174,7 +175,6 @@ function starboardUsers(user, received, gave) {
 	db.close();
 }
 
-
 function getStarboardStats() {
 	const db = new Database('./src/database.sqlite');
 
@@ -227,6 +227,52 @@ function getStarboardStats() {
 	};
 }
 
+function getStarboardStatsUser(messageAuthorId) {
+	const db = new Database('./src/database.sqlite');
+
+	const statement1 = db.prepare(`
+				SELECT COUNT(*) AS messageCount FROM starboardMessages WHERE messageAuthorId = @messageAuthorId
+			`);
+	const messageCount = statement1.get({ messageAuthorId: messageAuthorId });
+
+	const statement2 = db.prepare(`
+					SELECT SUM(reactionCount) AS totalStarCount FROM starboardMessages WHERE messageAuthorId = @messageAuthorId
+				`);
+	const totalStarCount = statement2.get({ messageAuthorId: messageAuthorId });
+
+	const statement3 = db.prepare(`
+				SELECT 
+					messageId, messageUrl, reactionCount 
+				FROM
+					starboardMessages
+				WHERE 
+					messageAuthorId = @messageAuthorId
+				ORDER BY 
+					reactionCount DESC
+				LIMIT 5
+				`);
+	const topPosts = statement3.all({ messageAuthorId: messageAuthorId });
+
+	const statement4 = db.prepare(`
+				SELECT
+					* 
+				FROM
+					starboardUsers
+				WHERE
+					user = @messageAuthorId
+				`);
+	const times = statement4.get({ messageAuthorId: messageAuthorId });
+
+	return {
+		messageCount: messageCount.messageCount,
+		totalStarCount: totalStarCount.totalStarCount,
+		topPosts: topPosts,
+		timesReceived: times.received,
+		timesGave: times.gave,
+	};
+
+}
+
 
 module.exports = {
 	createDatabase,
@@ -241,4 +287,5 @@ module.exports = {
 	removeFromStarboard,
 	getStarboardStats,
 	starboardUsers,
+	getStarboardStatsUser,
 };
