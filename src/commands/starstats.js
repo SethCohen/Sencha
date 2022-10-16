@@ -21,7 +21,7 @@ module.exports = {
 			const embed = new EmbedBuilder()
 				.setTitle(`${interaction.options.getUser('user').tag} Starboard Stats`)
 				.setColor(0xfdd835)
-				.setDescription(`${starboardStats.messageCount} messages starred with a total of ${starboardStats.totalStarCount ? starboardStats.totalStarCount : 0} stars.\n${starboardStats.timesReceived} times received a star.\n${starboardStats.timesGave} times given a star.`)
+				.setDescription(`${starboardStats.messageCount} messages starred with a total of ${starboardStats.totalStarCount ? starboardStats.totalStarCount : 0} stars received and ${starboardStats.timesGave} stars given.`)
 				.addFields([
 					{ name: 'Top Starred Posts', value: `${starboardStats.topPosts[0]}\n${starboardStats.topPosts[1]}\n${starboardStats.topPosts[2]}\n${starboardStats.topPosts[3]}\n${starboardStats.topPosts[4]}` },
 				]);
