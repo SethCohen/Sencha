@@ -46,7 +46,7 @@ module.exports = {
                         > 
                         > **2. Be civil and polite. No harassing, bullying, racism, hate speech, etc.** Honestly, just try to be a decent human being.
                         > 
-                        > **3. No weight and diet talk.** Discussions in the server about weight and diet are not allowed here. This includes commenwts about value judgments related to weight and food. 
+                        > **3. No weight and diet talk.** Discussions in the server about weight and diet are not allowed here. This includes comments about value judgments related to weight and food. 
                         > 
                         > **4. Be cautious of sensitive topics.** All sensitive topics need to be kept in #spilling-the-tea. Remember to use content warnings and wrap things in spoiler tags (\`|| content ||\`) when discussing sensitive topics.
                         > 
