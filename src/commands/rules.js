@@ -39,6 +39,12 @@ module.exports = {
 		case 1984:
 			await interaction.reply({ content: '> **1984. ████ ██ █████████ █████.**' });
 			break;
+		case 34:
+			await interaction.reply({ content: '> **34. No horny! Bonk.**' });
+			break;
+		case 420:
+			await interaction.reply({ content: '> **420. Blaze it 🔥**' });
+			break;
 		default:
 			return await interaction.reply({
 				content: `> **1. No gatekeeping or being pretentious.** No one likes a pretentious snob who goes "Ew coffee? Tea is way more superior" or "Bagged tea? Yikes."
