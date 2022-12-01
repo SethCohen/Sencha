@@ -10,6 +10,10 @@ const { EmbedBuilder } = require('discord.js');
  * @returns {Promise<void>}	Nothing.
  */
 const handleStarboardReactionAdd = async (messageReaction, user) => {
+	const messageReference = messageReaction.message.reference;
+	let repliedMessage;
+	if (messageReference) repliedMessage = await messageReaction.message.channel.messages.fetch(messageReference.messageId);
+
 	const embed = new EmbedBuilder()
 		.setAuthor({
 			name: messageReaction.message.author.tag,
@@ -17,7 +21,7 @@ const handleStarboardReactionAdd = async (messageReaction, user) => {
 		})
 		.setTitle(`🌟 ${messageReaction.count}`)
 		.setColor(0xfdd835)
-		.setDescription(`${messageReaction.message.content}\n\n[Jump To Message](${messageReaction.message.url})`)
+		.setDescription(`${repliedMessage.author}: "${repliedMessage.content}"\n\n${messageReaction.message.content}\n\n[Jump To Message](${messageReaction.message.url})`)
 		.setTimestamp(messageReaction.message.createdTimestamp);
 
 	if (messageReaction.message.attachments.size > 0) embed.setImage(messageReaction.message.attachments.first().url);
