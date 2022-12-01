@@ -5,6 +5,13 @@
 - Emote role assigning
 - Socials feed (Send posts from specific Instagram or Twitter accounts to a specific channel)
 
+## [1.5.0](https://github.com/SethCohen/Sencha/compare/v1.4.0...v1.5.0) (2022-12-01)
+
+
+### Features
+
+* added message pruning to `/ban` ([5c20f67](https://github.com/SethCohen/Sencha/commit/5c20f670728f9a186d27281ed2575f22bbcba686)), closes [#20](https://github.com/SethCohen/Sencha/issues/20)
+
 ## [1.4.0](https://github.com/SethCohen/Sencha/compare/v1.3.0...v1.4.0) (2022-12-01)
 
 
