@@ -1,6 +1,7 @@
 const { modChannelId, modRoleId } = require('../../config.json');
 const { updatePunishmentLogs } = require('../helpers/dbModel');
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const ms = require('ms');
 
 /**
  * Bans a user from the server, adding a record to the database.
@@ -9,11 +10,12 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
  * @param user				The user to ban.
  * @param reason			The reason for the ban.
  * @param shame				Whether or not to shame the user in chat.
+ * @param pruneLength		How far back to delete messages. Max 7 days.
  * @returns {Promise<void>}	Returns a message to chat.
  */
-const banUser = (interaction, user, reason, shame) => {
+const banUser = (interaction, user, reason, shame, pruneLength) => {
 	updatePunishmentLogs(user.id, 'timesBanned');
-	interaction.guild.members.ban(user, { days: 0, reason: reason })
+	interaction.guild.members.ban(user, { deleteMessageSeconds: pruneLength, reason: reason })
 		.then(memberBanned => {
 			if (shame === 'yes') {
 				return interaction.reply({ content: `**${memberBanned.user?.tag ?? memberBanned.tag ?? memberBanned}** has been banned. \n**Reason:** ${reason}` });
@@ -72,6 +74,10 @@ module.exports = {
 				.setDescription('The ban reason. This gets sent to the user anonymously.')
 				.setRequired(true))
 		.addStringOption(option =>
+			option.setName('prune')
+				.setDescription('Prune message length. Max 7d. e.g. 30m or 1d:1h:1m:1s.'),
+		)
+		.addStringOption(option =>
 			option.setName('shame')
 				.setDescription('Shames the user in chat. Posts to wherever command is called.')
 				.addChoices(
@@ -89,6 +95,9 @@ module.exports = {
 		const user = interaction.options.getUser('user');
 		const reason = interaction.options.getString('reason');
 		const shame = interaction.options.getString('shame');
+		const strPrune = interaction.options.getString('prune') ?? '0s';
+		let pruneLength = strPrune.split(':').reduce((partialSum, currentVal) => partialSum + ms(currentVal), 0) / 1000;
+		if (pruneLength > 604800) pruneLength = 604800;
 
 		interaction.guild.members.fetch(user).then(member => {
 			if (member.roles.cache.has(modRoleId)) {
@@ -100,12 +109,12 @@ module.exports = {
 			else {
 				user.send(`**You've been banned from ${interaction.guild.name}.**\n**Reason:** ${reason}`)
 					.then(() => {
-						banUser(interaction, user, reason, shame);
+						banUser(interaction, user, reason, shame, pruneLength);
 						logToModChannel(interaction, user, reason);
 					})
 					.catch(() => {
 						console.error(`Can't DM ${user}.`);
-						banUser(interaction, user, reason, shame);
+						banUser(interaction, user, reason, shame, pruneLength);
 						logToModChannel(interaction, user, reason);
 					});
 			}
