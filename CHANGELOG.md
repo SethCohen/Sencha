@@ -5,6 +5,20 @@
 - Emote role assigning
 - Socials feed (Send posts from specific Instagram or Twitter accounts to a specific channel)
 
+## [1.4.0](https://github.com/SethCohen/Sencha/compare/v1.3.0...v1.4.0) (2022-12-01)
+
+
+### Features
+
+* added replied content to starboard ([5f2003d](https://github.com/SethCohen/Sencha/commit/5f2003d287d77929268f56cda19703bd4b066efa)), closes [#19](https://github.com/SethCohen/Sencha/issues/19)
+* **rules:** added new rules easter eggs ([f8ccf24](https://github.com/SethCohen/Sencha/commit/f8ccf242e67d857e3b232fca93dfab156ae68c6b)), closes [#17](https://github.com/SethCohen/Sencha/issues/17)
+
+
+### Bug Fixes
+
+* **rules:** fixed typo ([4d6344b](https://github.com/SethCohen/Sencha/commit/4d6344b578c7dbe1fb1b01f646234e4b5c10f1ac)), closes [#18](https://github.com/SethCohen/Sencha/issues/18)
+* **starstats:** fixed user stats received values display. ([d9ba206](https://github.com/SethCohen/Sencha/commit/d9ba2064a1f26aef6da59e2b9643f86f8698582f))
+
 ## [1.3.0](https://github.com/SethCohen/Sencha/compare/v1.2.4...v1.3.0) (2022-10-16)
 
 
