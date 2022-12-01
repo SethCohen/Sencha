@@ -21,7 +21,7 @@ const handleStarboardReactionAdd = async (messageReaction, user) => {
 		})
 		.setTitle(`🌟 ${messageReaction.count}`)
 		.setColor(0xfdd835)
-		.setDescription(`${repliedMessage.author}: "${repliedMessage.content}"\n\n${messageReaction.message.content}\n\n[Jump To Message](${messageReaction.message.url})`)
+		.setDescription(`${repliedMessage ? repliedMessage.author + ': "' + repliedMessage.content + '\n\n' : ''}${messageReaction.message.content}\n\n[Jump To Message](${messageReaction.message.url})`)
 		.setTimestamp(messageReaction.message.createdTimestamp);
 
 	if (messageReaction.message.attachments.size > 0) embed.setImage(messageReaction.message.attachments.first().url);
