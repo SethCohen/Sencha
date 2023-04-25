@@ -11,10 +11,12 @@ module.exports = {
 			return interaction.reply({ content: 'No message found.' });
 		}
 
+		const repliedTo = await message.channel.messages.fetch(message.reference.messageId);
+
 		const embed = new EmbedBuilder()
 			.setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
-			.setDescription(message.content)
-			.setTimestamp(message.createdAt);
+			.setTimestamp(message.createdAt)
+			.setDescription(repliedTo ? `**${repliedTo.author}:** ${repliedTo.content}\n\n${message.content}` : message.content);
 
 		global.snipe.delete(interaction.channelId); // don't show the same message twice
 
