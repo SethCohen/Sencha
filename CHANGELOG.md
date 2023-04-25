@@ -5,6 +5,20 @@
 - Emote role assigning
 - Socials feed (Send posts from specific Instagram or Twitter accounts to a specific channel)
 
+## [1.6.0](https://github.com/SethCohen/Sencha/compare/v1.5.0...v1.6.0) (2023-04-25)
+
+
+### Features
+
+* autoposting wholesome memes now autopulls from subreddit ([c292509](https://github.com/SethCohen/Sencha/commit/c292509ab8684a2b4faddfcd564ff418f2fb4e27))
+* **snipe:** added show replied message ([e4fc0c3](https://github.com/SethCohen/Sencha/commit/e4fc0c3c4958863feb9a926667c6b551f1a01bf9)), closes [#23](https://github.com/SethCohen/Sencha/issues/23)
+
+
+### Bug Fixes
+
+* fixed error bot crash on no repliedMessage found. ([36532dc](https://github.com/SethCohen/Sencha/commit/36532dc90a080981290192cb422496f175b3abd5))
+* **starboard:** fixed starboard replied author styling ([5480322](https://github.com/SethCohen/Sencha/commit/5480322dac91f487d68d65932148752f4eb4dda9))
+
 ## [1.5.0](https://github.com/SethCohen/Sencha/compare/v1.4.0...v1.5.0) (2022-12-01)
 
 
