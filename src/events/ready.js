@@ -1,8 +1,9 @@
+const { EmbedBuilder } = require('discord.js');
 const { guildId, memeChannelId } = require('../../config.json');
 const { createDatabase, getGiveaways } = require('../helpers/dbModel');
 const { createTimeout } = require('../helpers/giveawayTimeouts');
-const fs = require('fs');
 const cron = require('node-cron');
+const justreddit = require('justreddit');
 
 /**
  * Checks database for giveaways that are ending soon and creates a timeout for them.
@@ -33,27 +34,27 @@ const startActiveGiveaways = (guild) => {
  * @param guild The guild to post the meme in
  */
 const autopostWholesomeMemes = (guild) => {
-	if (!fs.existsSync('./src/assets/wholesome-memes/')) fs.mkdirSync('./src/assets/wholesome-memes/');
-	const files = fs.readdirSync('./src/assets/wholesome-memes/');
-
 	if (!memeChannelId) {
 		console.error('memeChannelId not specified in config.json. Cannot post wholesome memes anywhere.');
 		return;
 	}
 
-	if (!files.length) {
-		console.log('No files found in src/assets/wholesome-memes/.');
-		return;
-	}
-
 	// Schedules daily autoposting for 12:00pm EST
 	cron.schedule('0 12 * * *', () => {
-		const chosenFile = files[Math.floor(Math.random() * files.length)];
-		guild.channels.fetch(memeChannelId)
-			.then(channel => {
-				channel.send({ content: 'Here have a wholesome meme. 🙂', files: [`./src/assets/wholesome-memes/${chosenFile}`] });
-			})
-			.catch(console.error);
+		justreddit.randomPostFromSub({ subReddit: 'wholesomememes' }).then((post) => {
+
+			const embed = new EmbedBuilder()
+				.setTitle(post.title)
+				.setColor('#9eeeff')
+				.setDescription(`[Image Source](${post.url}) | [Github](https://github.com/SethCohen/Sencha)`)
+				.setImage(post.image);
+
+			guild.channels.fetch(memeChannelId)
+				.then(channel => {
+					channel.send({ content: 'Here have a wholesome meme. 🙂', embeds: [embed] });
+				})
+				.catch(console.error);
+		});
 	}, {
 		scheduled: true,
 		timezone: 'America/Toronto',
