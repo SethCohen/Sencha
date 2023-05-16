@@ -1,18 +1,18 @@
-const { SlashCommandBuilder } = require('discord.js');
+import { SlashCommandBuilder } from 'discord.js';
 
-module.exports = {
+export default {
 	data: new SlashCommandBuilder()
 		.setName('rules')
 		.setDescription('Displays the rules.')
-		.addIntegerOption(option =>
-			option.setName('rule')
-				.setDescription('The rule to post.'),
+		.addIntegerOption(option => option.setName('rule')
+			.setDescription('The rule to post.'),
 		),
-	async execute(interaction) {
+	async  execute(interaction) {
 		const rule = interaction.options.getInteger('rule');
 		switch (rule) {
 		case 1:
-			await interaction.reply({ content: `> **1. No gatekeeping or being pretentious.** No one likes a pretentious snob who goes "Ew coffee? Tea is way more superior" or "Bagged tea? Yikes.
+			await interaction.reply({
+				content: `> **1. No gatekeeping or being pretentious.** No one likes a pretentious snob who goes "Ew coffee? Tea is way more superior" or "Bagged tea? Yikes.
                 > All preferences are welcomed here. And that goes beyond just tea.` });
 			break;
 		case 2:
@@ -60,7 +60,8 @@ module.exports = {
                         > 
                         > **6. No politics or controversial topics.** We're just a tea club discord, this isn't the place for such discussions. 
                         > 
-                        > **7. Chill, relax, and have fun.** 🍵` });
+                        > **7. Chill, relax, and have fun.** 🍵`,
+			});
 		}
 	},
 };

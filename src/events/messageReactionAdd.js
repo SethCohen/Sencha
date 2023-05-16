@@ -1,6 +1,5 @@
-const { starboardChannelId } = require('../../config.json');
-const { insertStarboard, getStarboard, starboardUsers } = require('../helpers/dbModel');
-const { EmbedBuilder } = require('discord.js');
+import { insertStarboard, getStarboard, starboardUsers } from '../helpers/dbModel.js';
+import { EmbedBuilder } from 'discord.js';
 
 /**
  * Handles starboard events on reaction add.
@@ -26,12 +25,12 @@ const handleStarboardReactionAdd = async (messageReaction, user) => {
 
 	if (messageReaction.message.attachments.size > 0) embed.setImage(messageReaction.message.attachments.first().url);
 
-	if (!starboardChannelId) {
+	if (!process.env.STARBOARD_CHANNEL_ID) {
 		console.error('starboardChannelId is not specified in config.json. Cannot pin to starboard.');
 		return;
 	}
 
-	messageReaction.message.guild.channels.fetch(starboardChannelId)
+	messageReaction.message.guild.channels.fetch(process.env.STARBOARD_CHANNEL_ID)
 		.then(async channel => {
 			if (messageReaction.count === 5) {
 				const starboardMsg = await channel.send({ embeds: [embed] });
@@ -55,10 +54,8 @@ const handleStarboardReactionAdd = async (messageReaction, user) => {
 
 };
 
-module.exports = {
-	name: 'messageReactionAdd',
-	async execute(messageReaction, user) {
-		if (messageReaction.partial) await messageReaction.fetch();
-		if (messageReaction.emoji.toString() === '⭐') await handleStarboardReactionAdd(messageReaction, user);
-	},
-};
+export default { name: 'messageReactionAdd',
+	async  execute(messageReaction, user) {
+		if (messageReaction.partial) {await messageReaction.fetch();}
+		if (messageReaction.emoji.toString() === '⭐') {await handleStarboardReactionAdd(messageReaction, user);}
+	} };

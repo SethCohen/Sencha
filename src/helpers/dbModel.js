@@ -1,4 +1,4 @@
-const Database = require('better-sqlite3');
+import Database from 'better-sqlite3';
 
 function createDatabase() {
 	const db = new Database('./src/database.sqlite');
@@ -274,7 +274,7 @@ function getStarboardStatsUser(messageAuthorId) {
 }
 
 
-module.exports = {
+export {
 	createDatabase,
 	deleteGiveaway,
 	addGiveaway,

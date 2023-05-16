@@ -1,9 +1,8 @@
-const { EmbedBuilder } = require('discord.js');
-const { guildId, memeChannelId } = require('../../config.json');
-const { createDatabase, getGiveaways } = require('../helpers/dbModel');
-const { createTimeout } = require('../helpers/giveawayTimeouts');
-const cron = require('node-cron');
-const justreddit = require('justreddit');
+import { EmbedBuilder } from 'discord.js';
+import { createDatabase, getGiveaways } from '../helpers/dbModel.js';
+import { createTimeout } from '../helpers/giveawayTimeouts.js';
+import { schedule } from 'node-cron';
+import { randomPostFromSub } from 'justreddit';
 
 /**
  * Checks database for giveaways that are ending soon and creates a timeout for them.
@@ -34,14 +33,14 @@ const startActiveGiveaways = (guild) => {
  * @param guild The guild to post the meme in
  */
 const autopostWholesomeMemes = (guild) => {
-	if (!memeChannelId) {
+	if (!process.env.MEME_CHANNEL_ID) {
 		console.error('memeChannelId not specified in config.json. Cannot post wholesome memes anywhere.');
 		return;
 	}
 
 	// Schedules daily autoposting for 12:00pm EST
-	cron.schedule('0 12 * * *', () => {
-		justreddit.randomPostFromSub({ subReddit: 'wholesomememes' }).then((post) => {
+	schedule('0 12 * * *', () => {
+		randomPostFromSub({ subReddit: 'wholesomememes' }).then((post) => {
 
 			const embed = new EmbedBuilder()
 				.setTitle(post.title)
@@ -49,7 +48,7 @@ const autopostWholesomeMemes = (guild) => {
 				.setDescription(`[Image Source](${post.url}) | [Github](https://github.com/SethCohen/Sencha)`)
 				.setImage(post.image);
 
-			guild.channels.fetch(memeChannelId)
+			guild.channels.fetch(process.env.MEME_CHANNEL_ID)
 				.then(channel => {
 					channel.send({ content: 'Here have a wholesome meme. 🙂', embeds: [embed] });
 				})
@@ -61,13 +60,12 @@ const autopostWholesomeMemes = (guild) => {
 	});
 };
 
-module.exports = {
-	name: 'ready',
+export default { name: 'ready',
 	once: true,
-	async execute(client) {
+	async  execute(client) {
 		console.log(`Ready! Logged in as ${client.user.tag}`);
 		client.user.setActivity('I love you.');
-		const guild = client.guilds.cache.get(guildId);
+		const guild = client.guilds.cache.get(process.env.GUILD_ID);
 
 		createDatabase();
 
@@ -75,5 +73,4 @@ module.exports = {
 
 		autopostWholesomeMemes(guild);
 
-	},
-};
+	} };

@@ -1,10 +1,10 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
 
-module.exports = {
+export default {
 	data: new SlashCommandBuilder()
 		.setName('snipe')
 		.setDescription('Snipes the last deleted/edited message.'),
-	async execute(interaction) {
+	async  execute(interaction) {
 		const message = global.snipe.get(interaction.channelId);
 
 		if (message === undefined) {

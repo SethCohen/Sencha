@@ -27,7 +27,7 @@ const handleWholesomeResponses = (message) => {
 
 };
 
-module.exports = {
+export default {
 	name: 'messageCreate',
 	execute(message) {
 		if (message.author.id === message.client.user.id) return false;

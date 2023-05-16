@@ -1,14 +1,13 @@
-const { getUserPunishmentLogs } = require('../helpers/dbModel');
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+import { getUserPunishmentLogs } from '../helpers/dbModel.js';
+import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
 
-module.exports = {
-	data: new SlashCommandBuilder()
+export default {
+	data:new SlashCommandBuilder()
 		.setName('userinfo')
 		.setDescription('Gets punishment records of a user.')
-		.addUserOption(option =>
-			option.setName('user')
-				.setDescription('The user to get info of.')
-				.setRequired(true),
+		.addUserOption(option => option.setName('user')
+			.setDescription('The user to get info of.')
+			.setRequired(true),
 		),
 	async execute(interaction) {
 		const user = interaction.options.getUser('user');
@@ -25,7 +24,7 @@ module.exports = {
 		}
 
 		const embed = new EmbedBuilder()
-			.setAuthor({ name: user.tag, iconURL:user.displayAvatarURL() })
+			.setAuthor({ name: user.tag, iconURL: user.displayAvatarURL() })
 			.setDescription('Times...')
 			.addFields(
 				{ name: 'Banned', value: logs.timesBanned.toString() },
@@ -37,5 +36,4 @@ module.exports = {
 		return interaction.reply({ embeds: [embed] });
 
 
-	},
-};
+	} };

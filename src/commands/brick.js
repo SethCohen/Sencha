@@ -1,20 +1,19 @@
-const fs = require('fs');
-const { updatePunishmentLogs } = require('../helpers/dbModel');
-const { SlashCommandBuilder } = require('discord.js');
+import { readdirSync } from 'fs';
+import { updatePunishmentLogs } from '../helpers/dbModel.js';
+import { SlashCommandBuilder } from 'discord.js';
 
-module.exports = {
+export default {
 	data: new SlashCommandBuilder()
 		.setName('brick')
 		.setDescription('Brick a user.')
-		.addUserOption(option =>
-			option.setName('user')
-				.setDescription('The user to brick.')
-				.setRequired(true),
+		.addUserOption(option => option.setName('user')
+			.setDescription('The user to brick.')
+			.setRequired(true),
 		),
 	async execute(interaction) {
 		const user = interaction.options.getUser('user');
 		const path = './src/assets/';
-		const brickFiles = fs.readdirSync(path).filter(file => file.startsWith('brick'));
+		const brickFiles = readdirSync(path).filter(file => file.startsWith('brick'));
 
 		const file = path + brickFiles[Math.floor(Math.random() * brickFiles.length)];
 

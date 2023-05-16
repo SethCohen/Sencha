@@ -1,5 +1,4 @@
-const { logChannelId } = require('../../config.json');
-const { EmbedBuilder } = require('discord.js');
+import { EmbedBuilder } from 'discord.js';
 
 /**
  * Handles how deleted message logs look and where they are sent.
@@ -15,12 +14,12 @@ const handleDeletedMessageLogging = (message) => {
 			.setTimestamp(message.createdTimestamp)
 			.setFooter({ text: 'The bot creator doesnt like logging :(' });
 
-		if (!logChannelId) {
+		if (!process.env.LOG_CHANNEL_ID) {
 			console.log('logChannelId is not specified in config.json. Cannot log deleted messages.');
 			return;
 		}
 
-		message.guild.channels.fetch(logChannelId)
+		message.guild.channels.fetch(process.env.LOG_CHANNEL_ID)
 			.then(channel => {
 				channel.send({ embeds: [embed], files: [...message.attachments.values()] });
 			})
@@ -30,14 +29,12 @@ const handleDeletedMessageLogging = (message) => {
 		console.error(e);
 	}
 };
-module.exports = {
-	name: 'messageDelete',
-	execute(message) {
-		if (message.partial) return false;
 
-		global.snipe.set(message.channelId, message);
+export default { name: 'messageDelete', execute(message) {
+	if (message.partial) {return false;}
 
-		handleDeletedMessageLogging(message);
+	global.snipe.set(message.channelId, message);
 
-	},
-};
+	handleDeletedMessageLogging(message);
+
+} };

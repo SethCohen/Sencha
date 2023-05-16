@@ -1,14 +1,14 @@
-const { InteractionType } = require('discord-api-types/v10');
+import { InteractionType } from 'discord.js';
 
-module.exports = {
+export default {
 	name: 'interactionCreate',
 	execute(interaction) {
-		// console.log(`${interaction.user.tag} in #${interaction.channel.name} triggered an interaction.`);
-		if (interaction.type !== InteractionType.ApplicationCommand) return;
+	// console.log(`${interaction.user.tag} in #${interaction.channel.name} triggered an interaction.`);
+		if (interaction.type !== InteractionType.ApplicationCommand) {return;}
 
 		const command = interaction.client.commands.get(interaction.commandName);
 
-		if (!command) return;
+		if (!command) {return;}
 
 		try {
 			command.execute(interaction);

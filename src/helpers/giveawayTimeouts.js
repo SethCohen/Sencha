@@ -1,5 +1,5 @@
-const { deleteGiveaway } = require('../helpers/dbModel');
-const { EmbedBuilder } = require('@discordjs/builders');
+import { deleteGiveaway } from '../helpers/dbModel.js';
+import { EmbedBuilder } from '@discordjs/builders';
 
 const listOfTimeouts = {};
 
@@ -28,7 +28,7 @@ function cancelTimeout(messageId) {
 	delete listOfTimeouts[messageId];
 }
 
-module.exports = {
+export {
 	createTimeout,
 	cancelTimeout,
 };

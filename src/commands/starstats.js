@@ -1,16 +1,15 @@
-const { getStarboardStats, getStarboardStatsUser } = require('../helpers/dbModel');
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+import { getStarboardStats, getStarboardStatsUser } from '../helpers/dbModel.js';
+import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
 
-module.exports = {
+export default {
 	data: new SlashCommandBuilder()
 		.setName('starstats')
 		.setDescription('Prints starboard stats')
 		.addUserOption(option => option.setName('user').setDescription('The user to get stats for')),
-	async execute(interaction) {
+	async  execute(interaction) {
 		if (interaction.options.getUser('user')) {
 			const starboardStats = getStarboardStatsUser(interaction.options.getUser('user').id);
 			// console.log(starboardStats);
-
 			starboardStats.topPosts[0] = starboardStats.topPosts[0] ? `🥇 [${starboardStats.topPosts[0].messageId}](${starboardStats.topPosts[0].messageUrl}) (${starboardStats.topPosts[0].reactionCount} stars)` : '🥇 N/A';
 			starboardStats.topPosts[1] = starboardStats.topPosts[1] ? `🥈 [${starboardStats.topPosts[1].messageId}](${starboardStats.topPosts[1].messageUrl}) (${starboardStats.topPosts[1].reactionCount} stars)` : '🥈 N/A';
 			starboardStats.topPosts[2] = starboardStats.topPosts[2] ? `🥉 [${starboardStats.topPosts[2].messageId}](${starboardStats.topPosts[2].messageUrl}) (${starboardStats.topPosts[2].reactionCount} stars)` : '🥉 N/A';
@@ -50,10 +49,9 @@ module.exports = {
 				.setDescription(`${starboardStats.messageCount} messages starred with a total of ${starboardStats.totalStarCount ? starboardStats.totalStarCount : 0} stars`)
 				.addFields([
 					{ name: 'Top Starred Posts', value: `${starboardStats.topPosts[0]}\n${starboardStats.topPosts[1]}\n${starboardStats.topPosts[2]}` },
-					{ name: 'Top Star Receivers', value:`${starboardStats.topReceived[0]}\n${starboardStats.topReceived[1]}\n${starboardStats.topReceived[2]}`, inline: true },
-					{ name: 'Top Star Givers', value:`${starboardStats.topGave[0]}\n${starboardStats.topGave[1]}\n${starboardStats.topGave[2]}`, inline: true },
+					{ name: 'Top Star Receivers', value: `${starboardStats.topReceived[0]}\n${starboardStats.topReceived[1]}\n${starboardStats.topReceived[2]}`, inline: true },
+					{ name: 'Top Star Givers', value: `${starboardStats.topGave[0]}\n${starboardStats.topGave[1]}\n${starboardStats.topGave[2]}`, inline: true },
 				]);
 			return await interaction.reply({ embeds: [embed] });
 		}
-	},
-};
+	} };

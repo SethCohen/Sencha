@@ -1,5 +1,4 @@
-const { logChannelId } = require('../../config.json');
-const { EmbedBuilder } = require('discord.js');
+import { EmbedBuilder } from 'discord.js';
 
 /**
  * Handles how edited message logs look and where they are sent.
@@ -27,7 +26,7 @@ const handleEditedMessageLogging = (oldMessage, newMessage) => {
 				.setTimestamp(newMessage.createdTimestamp)
 				.setFooter({ text: 'The bot creator doesnt like logging :(' });
 
-			newMessage.guild.channels.fetch(logChannelId)
+			newMessage.guild.channels.fetch(process.env.LOG_CHANNEL_ID)
 				.then(channel => {
 					channel.send({ embeds: [embed] });
 				})
@@ -40,15 +39,13 @@ const handleEditedMessageLogging = (oldMessage, newMessage) => {
 	}
 };
 
-module.exports = {
-	name: 'messageUpdate',
+export default { name: 'messageUpdate',
 	execute(oldMessage, newMessage) {
-		if (oldMessage.partial) return false;
-		if (oldMessage.interaction) return false;
+		if (oldMessage.partial) {return false;}
+		if (oldMessage.interaction) {return false;}
 
 		global.snipe.set(oldMessage.channelId, oldMessage);
 
 		handleEditedMessageLogging(oldMessage, newMessage);
 
-	},
-};
+	} };

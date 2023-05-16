@@ -1,7 +1,8 @@
-const { modChannelId, modRoleId } = require('../../config.json');
-const { updatePunishmentLogs } = require('../helpers/dbModel');
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const ms = require('ms');
+import { updatePunishmentLogs } from '../helpers/dbModel.js';
+import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
+import ms from 'ms';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 /**
  * Bans a user from the server, adding a record to the database.
@@ -43,12 +44,12 @@ const logToModChannel = (interaction, user, reason) => {
 			.setTimestamp(interaction.createdTimestamp)
 			.setFooter({ text: 'The bot creator doesnt like logging :(' });
 
-		if (!modChannelId) {
+		if (!process.env.MOD_CHANNEL_ID) {
 			console.log('modChannelId is not specified in config.json. Cannot log bans.');
 			return;
 		}
 
-		interaction.guild.channels.fetch(modChannelId)
+		interaction.guild.channels.fetch(process.env.MOD_CHANNEL_ID)
 			.then(channel => {
 				channel.send({ embeds: [embed] });
 			})
@@ -59,33 +60,29 @@ const logToModChannel = (interaction, user, reason) => {
 	}
 };
 
-module.exports = {
+export default {
 	data: new SlashCommandBuilder()
 		.setName('ban')
 		.setDescription('Bans a specified user.')
 		.setDefaultPermission(false)
-		.addUserOption(option =>
-			option.setName('user')
-				.setDescription('The user to ban.')
-				.setRequired(true),
+		.addUserOption(option => option.setName('user')
+			.setDescription('The user to ban.')
+			.setRequired(true),
 		)
-		.addStringOption(option =>
-			option.setName('reason')
-				.setDescription('The ban reason. This gets sent to the user anonymously.')
-				.setRequired(true))
-		.addStringOption(option =>
-			option.setName('prune')
-				.setDescription('Prune message length. Max 7d. e.g. 30m or 1d:1h:1m:1s.'),
+		.addStringOption(option => option.setName('reason')
+			.setDescription('The ban reason. This gets sent to the user anonymously.')
+			.setRequired(true))
+		.addStringOption(option => option.setName('prune')
+			.setDescription('Prune message length. Max 7d. e.g. 30m or 1d:1h:1m:1s.'),
 		)
-		.addStringOption(option =>
-			option.setName('shame')
-				.setDescription('Shames the user in chat. Posts to wherever command is called.')
-				.addChoices(
-					{ name: 'Yes', value: 'yes' },
-					{ name:'No', value: 'no' },
-				)),
+		.addStringOption(option => option.setName('shame')
+			.setDescription('Shames the user in chat. Posts to wherever command is called.')
+			.addChoices(
+				{ name: 'Yes', value: 'yes' },
+				{ name: 'No', value: 'no' },
+			)),
 	async execute(interaction) {
-		if (!interaction.member.roles.cache.has(modRoleId)) {
+		if (!interaction.member.roles.cache.has(process.env.MOD_ROLE_ID)) {
 			return interaction.reply({
 				content: 'You do not have enough permissions to use this command.',
 				ephemeral: true,
@@ -97,10 +94,10 @@ module.exports = {
 		const shame = interaction.options.getString('shame');
 		const strPrune = interaction.options.getString('prune') ?? '0s';
 		let pruneLength = strPrune.split(':').reduce((partialSum, currentVal) => partialSum + ms(currentVal), 0) / 1000;
-		if (pruneLength > 604800) pruneLength = 604800;
+		if (pruneLength > 604800) {pruneLength = 604800;}
 
 		interaction.guild.members.fetch(user).then(member => {
-			if (member.roles.cache.has(modRoleId)) {
+			if (member.roles.cache.has(process.env.MOD_ROLE_ID)) {
 				return interaction.reply({
 					content: 'You cannot ban this person.',
 					ephemeral: true,
@@ -119,7 +116,5 @@ module.exports = {
 					});
 			}
 		});
-
-
 	},
 };
