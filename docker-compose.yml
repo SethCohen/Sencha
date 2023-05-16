@@ -1,0 +1,9 @@
+version: '3.9'
+services:
+  sencha:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    image: sencha:latest
