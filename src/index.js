@@ -9,14 +9,17 @@ const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 global.snipe = new Map();
 
 const client = new Client({
-	intents: [GatewayIntentBits.Guilds,
+	intents: [
+		GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildModeration,
 		GatewayIntentBits.GuildMessages,
 		GatewayIntentBits.GuildMessageReactions,
-		GatewayIntentBits.GuildBans,
-		GatewayIntentBits.GuildVoiceStates,
 		GatewayIntentBits.DirectMessages,
 		GatewayIntentBits.MessageContent],
-	partials: [Partials.Message, Partials.User, Partials.Reaction],
+	partials: [
+		Partials.Message,
+		Partials.User,
+		Partials.Reaction],
 });
 
 

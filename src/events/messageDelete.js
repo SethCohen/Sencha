@@ -1,10 +1,5 @@
 import { EmbedBuilder } from 'discord.js';
 
-/**
- * Handles how deleted message logs look and where they are sent.
- *
- * @param message	The message that was deleted.
- */
 const handleDeletedMessageLogging = (message) => {
 	try {
 		const embed = new EmbedBuilder()
@@ -15,7 +10,7 @@ const handleDeletedMessageLogging = (message) => {
 			.setFooter({ text: 'The bot creator doesnt like logging :(' });
 
 		if (!process.env.LOG_CHANNEL_ID) {
-			console.log('logChannelId is not specified in config.json. Cannot log deleted messages.');
+			console.log('LOG_CHANNEL_ID is not specified in .env file.\nCannot log deleted messages.');
 			return;
 		}
 

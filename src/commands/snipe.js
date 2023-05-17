@@ -7,7 +7,7 @@ export default {
 	async  execute(interaction) {
 		const message = global.snipe.get(interaction.channelId);
 
-		if (message === undefined) {
+		if (!message) {
 			return interaction.reply({ content: 'No message found.' });
 		}
 

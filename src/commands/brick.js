@@ -1,6 +1,12 @@
 import { readdirSync } from 'fs';
-import { updatePunishmentLogs } from '../helpers/dbModel.js';
+import path from 'path';
 import { SlashCommandBuilder } from 'discord.js';
+
+const getRandomBrickFile = (dir) => {
+	const brickFiles = readdirSync(dir).filter(file => file.startsWith('brick'));
+	const randomFile = brickFiles[Math.floor(Math.random() * brickFiles.length)];
+	return path.join(dir, randomFile);
+};
 
 export default {
 	data: new SlashCommandBuilder()
@@ -12,12 +18,7 @@ export default {
 		),
 	async execute(interaction) {
 		const user = interaction.options.getUser('user');
-		const path = './src/assets/';
-		const brickFiles = readdirSync(path).filter(file => file.startsWith('brick'));
-
-		const file = path + brickFiles[Math.floor(Math.random() * brickFiles.length)];
-
-		updatePunishmentLogs(user.id, 'timesBricked');
+		const file = getRandomBrickFile('./src/assets/');
 
 		return await interaction.reply({ content: `${user} has been bricked.`, files: [file] });
 	},

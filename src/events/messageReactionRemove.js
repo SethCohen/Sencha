@@ -1,14 +1,12 @@
-import { getStarboard, removeFromStarboard, starboardUsers } from '../helpers/dbModel.js';
 import { EmbedBuilder } from 'discord.js';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
-/**
- * Handles starboard events on reaction removal.
- *
- * @param messageReaction	The reaction that was removed.
- * @param user				The user that removed the reaction.
- * @returns {Promise<void>}	Nothing.
- */
-const handleStarboardReactionRemove = async (messageReaction, user) => {
+const handleStarboardReactionRemove = async (messageReaction) => {
+	const messageReference = messageReaction.message.reference;
+	let repliedMessage;
+	if (messageReference) repliedMessage = await messageReaction.message.channel.messages.fetch(messageReference.messageId);
+
 	const embed = new EmbedBuilder()
 		.setAuthor({
 			name: messageReaction.message.author.tag,
@@ -16,40 +14,32 @@ const handleStarboardReactionRemove = async (messageReaction, user) => {
 		})
 		.setTitle(`🌟 ${messageReaction.count}`)
 		.setColor(0xfdd835)
-		.setDescription(`${messageReaction.message.content}\n\n[Jump To Message](${messageReaction.message.url})`)
-		.setTimestamp(messageReaction.message.createdTimestamp);
+		.setDescription(`${repliedMessage ? `**${repliedMessage.author}:** "${repliedMessage.content}"\n\n` : ''}${messageReaction.message.content}\n\n[Jump To Message](${messageReaction.message.url}) | [Github](https://github.com/SethCohen/Sencha)`)
+		.setTimestamp(messageReaction.message.createdTimestamp)
+		.setFooter({ text: messageReaction.message.id });
 
 	if (messageReaction.message.attachments.size > 0) embed.setImage(messageReaction.message.attachments.first().url);
 
 	if (!process.env.STARBOARD_CHANNEL_ID) {
-		console.error('starboardChannelId is not specified in config.json. Cannot remove from starboard.');
+		console.error('starboardChannelId is not specified in .env\nCannot pin to starboard.');
 		return;
 	}
 
-	messageReaction.message.guild.channels.fetch(process.env.STARBOARD_CHANNEL_ID)
-		.then(async channel => {
-			if (messageReaction.count < 5) {
-				const starboard = await getStarboard(messageReaction.message.id);
-				if (!starboard) return null;
-				const starboardMsg = await channel.messages.fetch(starboard.starboardId);
-				await starboardMsg.delete();
-				removeFromStarboard(messageReaction.message.id);
-				starboardUsers(messageReaction.message.author.id, -1, 0);
-				starboardUsers(user.id, 0, -1);
-			}
-			else {
-				const starboard = await getStarboard(messageReaction.message.id);
-				channel.messages.fetch(starboard.starboardId)
-					.then(message => {
-						message.edit({ embeds: [embed] });
-						starboardUsers(messageReaction.message.author.id, -1, 0);
-						starboardUsers(user.id, 0, -1);
-					})
-					.catch(console.error);
-			}
-		})
-		.catch(console.error);
+	const starboardChannel = await messageReaction.message.guild.channels.fetch(process.env.STARBOARD_CHANNEL_ID);
+	const message = messageReaction.message;
 
+	const starboardMessages = await starboardChannel.messages.fetch({ limit: 100 });
+	const starboardMessage = starboardMessages.find((msg) => {
+		if (msg?.embeds[0]?.footer?.text.includes(message.id)) return true;
+		return false;
+	});
+
+	if (starboardMessage && messageReaction.count < parseInt(process.env.STARBOARD_THRESHOLD)) {
+		await starboardMessage.delete();
+	}
+	else {
+		await starboardChannel.edit({ embeds: [embed] });
+	}
 };
 
 export default { name: 'messageReactionRemove',

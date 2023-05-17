@@ -1,8 +1,3 @@
-/**
- * Handles bot responses to basic messages.
- *
- * @param message	The message that was sent.
- */
 const handleWholesomeResponses = (message) => {
 	const ily = [
 		'ily',
