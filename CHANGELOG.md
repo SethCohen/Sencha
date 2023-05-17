@@ -5,6 +5,13 @@
 - Emote role assigning
 - Socials feed (Send posts from specific Instagram or Twitter accounts to a specific channel)
 
+## [1.7.0](https://github.com/SethCohen/Sencha/compare/v1.6.0...v1.7.0) (2023-05-17)
+
+
+### Features
+
+* added audit log tracking ([821a584](https://github.com/SethCohen/Sencha/commit/821a584aa500b1de2671b4d38a8b0f0d82122357))
+
 ## [1.6.0](https://github.com/SethCohen/Sencha/compare/v1.5.0...v1.6.0) (2023-04-25)
 
 
