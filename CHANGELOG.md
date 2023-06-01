@@ -5,6 +5,13 @@
 - Emote role assigning
 - Socials feed (Send posts from specific Instagram or Twitter accounts to a specific channel)
 
+## [1.7.1](https://github.com/SethCohen/Sencha/compare/v1.7.0...v1.7.1) (2023-06-01)
+
+
+### Bug Fixes
+
+* **snipe:** fixed error on no message reference ([4da2622](https://github.com/SethCohen/Sencha/commit/4da262236310e57817993f0264aa318758a84f7c))
+
 ## [1.7.0](https://github.com/SethCohen/Sencha/compare/v1.6.0...v1.7.0) (2023-05-17)
 
 
