@@ -4,14 +4,18 @@ export default {
 	data: new SlashCommandBuilder()
 		.setName('snipe')
 		.setDescription('Snipes the last deleted/edited message.'),
-	async  execute(interaction) {
+	async execute(interaction) {
 		const message = global.snipe.get(interaction.channelId);
+		console.log(message);
 
 		if (!message) {
 			return interaction.reply({ content: 'No message found.' });
 		}
 
-		const repliedTo = await message.channel.messages.fetch(message.reference.messageId);
+		let repliedTo = null;
+		if (message.reference) {
+			repliedTo = await message.channel.messages.fetch(message.reference.messageId);
+		}
 
 		const embed = new EmbedBuilder()
 			.setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
