@@ -5,6 +5,13 @@
 - Emote role assigning
 - Socials feed (Send posts from specific Instagram or Twitter accounts to a specific channel)
 
+## [1.7.2](https://github.com/SethCohen/Sencha/compare/v1.7.1...v1.7.2) (2023-10-12)
+
+
+### Bug Fixes
+
+* **starboard:** fixed error when fetching null replied message ([6cc2c28](https://github.com/SethCohen/Sencha/commit/6cc2c28519e058f61970400472e0b6cc3f1ac387))
+
 ## [1.7.1](https://github.com/SethCohen/Sencha/compare/v1.7.0...v1.7.1) (2023-06-01)
 
 
