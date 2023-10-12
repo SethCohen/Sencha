@@ -5,7 +5,7 @@ dotenv.config();
 const handleStarboardReactionAdd = async (messageReaction) => {
 	const messageReference = messageReaction.message.reference;
 	let repliedMessage;
-	if (messageReference) repliedMessage = await messageReaction.message.channel.messages.fetch(messageReference.messageId);
+	if (messageReference) repliedMessage = await messageReaction.message.channel.messages.fetch(messageReference.messageId).catch(() => null);
 
 	const embed = new EmbedBuilder()
 		.setAuthor({
@@ -40,7 +40,6 @@ const handleStarboardReactionAdd = async (messageReaction) => {
 		await starboardMessage.edit({ embeds: [embed] });
 	}
 	else if (!starboardMessage && messageReaction.count === parseInt(process.env.STARBOARD_THRESHOLD)) {
-		console.log('test');
 		await starboardChannel.send({ embeds: [embed] });
 	}
 
